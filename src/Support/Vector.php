@@ -1,8 +1,8 @@
 <?php
 
-namespace OpenCF\OpenCF\Support;
+namespace OpenCF\Support;
 
-use OpenCF\OpenCF\Contracts\IVector;
+use OpenCF\Contracts\IVector;
 
 class Vector implements IVector
 {

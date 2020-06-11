@@ -1,8 +1,8 @@
 <?php
 
-namespace OpenCF\OpenCF\Algorithms\Slopeone;
+namespace OpenCF\Algorithms\Slopeone;
 
-use OpenCF\OpenCF\Algorithms\Predictor as AbstractPredictor;
+use OpenCF\Algorithms\Predictor as AbstractPredictor;
 
 class Predictor extends AbstractPredictor
 {

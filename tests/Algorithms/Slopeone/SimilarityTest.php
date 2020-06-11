@@ -1,9 +1,9 @@
 <?php
 
-namespace OpenCF\OpenCF\Tests\Algorithms\Slopeone;
+namespace OpenCF\Tests\Algorithms\Slopeone;
 
-use OpenCF\OpenCF\Algorithms\Slopeone\Similarity;
-use OpenCF\OpenCF\Support\Vector;
+use OpenCF\Algorithms\Slopeone\Similarity;
+use OpenCF\Support\Vector;
 use PHPUnit\Framework\TestCase as TestCase;
 
 class SimilarityTest extends TestCase

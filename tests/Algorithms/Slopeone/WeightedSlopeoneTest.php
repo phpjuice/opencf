@@ -1,8 +1,8 @@
 <?php
 
-namespace OpenCF\OpenCF\Tests\Algorithms\Slopeone;
+namespace OpenCF\Tests\Algorithms\Slopeone;
 
-use OpenCF\OpenCF\Algorithms\Slopeone\WeightedSlopeone;
+use OpenCF\Algorithms\Slopeone\WeightedSlopeone;
 use PHPUnit\Framework\TestCase as TestCase;
 
 class WeightedSlopeoneTest extends TestCase

@@ -1,6 +1,6 @@
 <?php
 
-namespace OpenCF\OpenCF\Contracts;
+namespace OpenCF\Contracts;
 
 interface IRecommenderService
 {
@@ -11,7 +11,7 @@ interface IRecommenderService
      *
      * @throws NotRegisteredRecommenderException
      *
-     * @return OpenCF\OpenCF\Contracts\IRecommender
+     * @return OpenCF\Contracts\IRecommender
      */
     public function getRecommender($name);
 

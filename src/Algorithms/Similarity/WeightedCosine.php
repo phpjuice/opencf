@@ -1,6 +1,6 @@
 <?php
 
-namespace OpenCF\OpenCF\Algorithms\Similarity;
+namespace OpenCF\Algorithms\Similarity;
 
 class WeightedCosine extends Cosine
 {

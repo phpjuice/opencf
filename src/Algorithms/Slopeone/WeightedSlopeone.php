@@ -1,8 +1,8 @@
 <?php
 
-namespace OpenCF\OpenCF\Algorithms\Slopeone;
+namespace OpenCF\Algorithms\Slopeone;
 
-use OpenCF\OpenCF\Algorithms\Recommender;
+use OpenCF\Algorithms\Recommender;
 
 class WeightedSlopeone extends Recommender
 {

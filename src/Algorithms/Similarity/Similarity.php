@@ -1,9 +1,9 @@
 <?php
 
-namespace OpenCF\OpenCF\Algorithms\Similarity;
+namespace OpenCF\Algorithms\Similarity;
 
-use OpenCF\OpenCF\Contracts\ISimilarity;
-use OpenCF\OpenCF\Contracts\IVector;
+use OpenCF\Contracts\ISimilarity;
+use OpenCF\Contracts\IVector;
 
 class Similarity implements ISimilarity
 {

@@ -1,9 +1,9 @@
 <?php
 
-namespace OpenCF\OpenCF\Algorithms;
+namespace OpenCF\Algorithms;
 
-use OpenCF\OpenCF\Contracts\IPredictor;
-use OpenCF\OpenCF\Contracts\IVector;
+use OpenCF\Contracts\IPredictor;
+use OpenCF\Contracts\IVector;
 
 abstract class Predictor implements IPredictor
 {

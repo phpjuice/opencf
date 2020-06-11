@@ -1,10 +1,10 @@
 <?php
 
-namespace OpenCF\OpenCF\Tests\Algorithms\Similarity;
+namespace OpenCF\Tests\Algorithms\Similarity;
 
-use OpenCF\OpenCF\Algorithms\Similarity\Cosine;
-use OpenCF\OpenCF\Algorithms\Similarity\Predictor;
-use OpenCF\OpenCF\Support\Vector;
+use OpenCF\Algorithms\Similarity\Cosine;
+use OpenCF\Algorithms\Similarity\Predictor;
+use OpenCF\Support\Vector;
 use PHPUnit\Framework\TestCase as TestCase;
 
 class PredictorTest extends TestCase

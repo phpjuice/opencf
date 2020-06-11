@@ -1,6 +1,6 @@
 <?php
 
-namespace OpenCF\OpenCF\Contracts;
+namespace OpenCF\Contracts;
 
 interface IPredictor
 {

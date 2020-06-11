@@ -1,13 +1,13 @@
 <?php
 
-namespace OpenCF\OpenCF\Tests;
+namespace OpenCF\Tests;
 
-use OpenCF\OpenCF\Algorithms\Similarity\Cosine;
-use OpenCF\OpenCF\Algorithms\Similarity\WeightedCosine;
-use OpenCF\OpenCF\Algorithms\Slopeone\WeightedSlopeone;
-use OpenCF\OpenCF\Exceptions\EmptyDatasetException;
-use OpenCF\OpenCF\Exceptions\NotRegisteredRecommenderException;
-use OpenCF\OpenCF\RecommenderService;
+use OpenCF\Algorithms\Similarity\Cosine;
+use OpenCF\Algorithms\Similarity\WeightedCosine;
+use OpenCF\Algorithms\Slopeone\WeightedSlopeone;
+use OpenCF\Exceptions\EmptyDatasetException;
+use OpenCF\Exceptions\NotRegisteredRecommenderException;
+use OpenCF\RecommenderService;
 use PHPUnit\Framework\TestCase as TestCase;
 
 class RecommenderServiceTest extends TestCase

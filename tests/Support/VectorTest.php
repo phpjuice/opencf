@@ -1,8 +1,8 @@
 <?php
 
-namespace OpenCF\OpenCF\Tests\Support;
+namespace OpenCF\Tests\Support;
 
-use OpenCF\OpenCF\Support\Vector;
+use OpenCF\Support\Vector;
 use PHPUnit\Framework\TestCase as TestCase;
 
 class VectorTest extends TestCase

@@ -1,8 +1,8 @@
 <?php
 
-namespace OpenCF\OpenCF\Tests\Algorithms\Similarity;
+namespace OpenCF\Tests\Algorithms\Similarity;
 
-use OpenCF\OpenCF\Algorithms\Similarity\WeightedCosine;
+use OpenCF\Algorithms\Similarity\WeightedCosine;
 use PHPUnit\Framework\TestCase as TestCase;
 
 class WeightedCosineTest extends TestCase

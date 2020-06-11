@@ -1,9 +1,9 @@
 <?php
 
-namespace OpenCF\OpenCF\Tests\Algorithms\Similarity;
+namespace OpenCF\Tests\Algorithms\Similarity;
 
-use OpenCF\OpenCF\Algorithms\Similarity\Similarity;
-use OpenCF\OpenCF\Support\Vector;
+use OpenCF\Algorithms\Similarity\Similarity;
+use OpenCF\Support\Vector;
 use PHPUnit\Framework\TestCase as TestCase;
 
 class SimilarityTest extends TestCase

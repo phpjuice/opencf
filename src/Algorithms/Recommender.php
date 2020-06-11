@@ -1,9 +1,9 @@
 <?php
 
-namespace OpenCF\OpenCF\Algorithms;
+namespace OpenCF\Algorithms;
 
-use OpenCF\OpenCF\Contracts\IRecommender;
-use OpenCF\OpenCF\Support\Vector;
+use OpenCF\Contracts\IRecommender;
+use OpenCF\Support\Vector;
 
 abstract class Recommender implements IRecommender
 {
@@ -31,7 +31,7 @@ abstract class Recommender implements IRecommender
     /**
      * Predictor.
      *
-     * @var \OpenCF\OpenCF\Contracts\IPredictor
+     * @var \OpenCF\Contracts\IPredictor
      */
     protected $predictor;
 
@@ -80,9 +80,10 @@ abstract class Recommender implements IRecommender
                 } catch (\InvalidArgumentException $e) {
                     continue;
                 }
-            }//endforeach
-        }//endforeach
-    return $this;
+            }
+        }
+
+        return $this;
     }
 
     /**
@@ -90,7 +91,7 @@ abstract class Recommender implements IRecommender
      */
     public function predict(array $evaluation)
     {
-        $preds = [];
+        $predictions = [];
         foreach ($this->model as $key => $items) {
             // if the rating is present in the
             // evaluation given by the user we skip
@@ -98,13 +99,14 @@ abstract class Recommender implements IRecommender
                 continue;
             }
             try {
-                $preds[$key] = $this->predictor
+                $predictions[$key] = $this->predictor
                             ->getPrediction($evaluation, $key);
             } catch (\Exception $e) {
                 continue;
             }
-        }//endforeach
-        return $preds;
+        }
+
+        return $predictions;
     }
 
     /**

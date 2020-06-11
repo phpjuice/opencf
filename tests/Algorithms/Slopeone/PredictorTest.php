@@ -1,10 +1,10 @@
 <?php
 
-namespace OpenCF\OpenCF\Tests\Algorithms\Slopeone;
+namespace OpenCF\Tests\Algorithms\Slopeone;
 
-use OpenCF\OpenCF\Algorithms\Slopeone\Predictor;
-use OpenCF\OpenCF\Algorithms\Slopeone\WeightedSlopeone;
-use OpenCF\OpenCF\Support\Vector;
+use OpenCF\Algorithms\Slopeone\Predictor;
+use OpenCF\Algorithms\Slopeone\WeightedSlopeone;
+use OpenCF\Support\Vector;
 use PHPUnit\Framework\TestCase as TestCase;
 
 class PredictorTest extends TestCase

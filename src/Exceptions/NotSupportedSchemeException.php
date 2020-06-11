@@ -1,6 +1,6 @@
 <?php
 
-namespace OpenCF\OpenCF\Exceptions;
+namespace OpenCF\Exceptions;
 
 class NotSupportedSchemeException extends \InvalidArgumentException
 {

@@ -1,8 +1,8 @@
 <?php
 
-namespace OpenCF\OpenCF\Algorithms\Similarity;
+namespace OpenCF\Algorithms\Similarity;
 
-use OpenCF\OpenCF\Algorithms\Predictor as AbstractPredictor;
+use OpenCF\Algorithms\Predictor as AbstractPredictor;
 
 class Predictor extends AbstractPredictor
 {

@@ -1,8 +1,8 @@
 <?php
 
-namespace OpenCF\OpenCF\Algorithms\Similarity;
+namespace OpenCF\Algorithms\Similarity;
 
-use OpenCF\OpenCF\Algorithms\Recommender;
+use OpenCF\Algorithms\Recommender;
 
 class Cosine extends Recommender
 {

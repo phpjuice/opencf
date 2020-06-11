@@ -25,12 +25,12 @@
     },
     "autoload": {
         "psr-4": {
-            "OpenCF\\OpenCF\\": "src"
+            "OpenCF\\": "src"
         }
     },
     "autoload-dev": {
         "psr-4": {
-            "OpenCF\\OpenCF\\Tests\\": "tests"
+            "OpenCF\\Tests\\": "tests"
         }
     },
     "scripts": {

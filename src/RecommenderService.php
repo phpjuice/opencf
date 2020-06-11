@@ -1,19 +1,19 @@
 <?php
 
-namespace OpenCF\OpenCF;
+namespace OpenCF;
 
-use OpenCF\OpenCF\Algorithms\Similarity\Cosine;
-use OpenCF\OpenCF\Algorithms\Similarity\WeightedCosine;
-use OpenCF\OpenCF\Algorithms\Slopeone\WeightedSlopeone;
-use OpenCF\OpenCF\Contracts\IRecommenderService;
-use OpenCF\OpenCF\Exceptions\EmptyDatasetException;
-use OpenCF\OpenCF\Exceptions\NotRegisteredRecommenderException;
-use OpenCF\OpenCF\Exceptions\NotSupportedSchemeException;
+use OpenCF\Algorithms\Similarity\Cosine;
+use OpenCF\Algorithms\Similarity\WeightedCosine;
+use OpenCF\Algorithms\Slopeone\WeightedSlopeone;
+use OpenCF\Contracts\IRecommenderService;
+use OpenCF\Exceptions\EmptyDatasetException;
+use OpenCF\Exceptions\NotRegisteredRecommenderException;
+use OpenCF\Exceptions\NotSupportedSchemeException;
 
 class RecommenderService implements IRecommenderService
 {
     /**
-     * @var OpenCF\OpenCF\Contracts\IRecommender[]
+     * @var OpenCF\Contracts\IRecommender[]
      */
     private $engines = [];
 
@@ -23,10 +23,10 @@ class RecommenderService implements IRecommenderService
      * @var array
      */
     private $supportedEngines = [
-    'Cosine',
-    'WeightedCosine',
-    'WeightedSlopeone',
-  ];
+        'Cosine',
+        'WeightedCosine',
+        'WeightedSlopeone',
+    ];
 
     /**
      * training set.

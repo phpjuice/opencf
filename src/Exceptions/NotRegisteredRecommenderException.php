@@ -1,6 +1,6 @@
 <?php
 
-namespace OpenCF\OpenCF\Exceptions;
+namespace OpenCF\Exceptions;
 
 class NotRegisteredRecommenderException extends \InvalidArgumentException
 {

@@ -1,8 +1,8 @@
 <?php
 
-namespace OpenCF\OpenCF\Tests\Algorithms\Similarity;
+namespace OpenCF\Tests\Algorithms\Similarity;
 
-use OpenCF\OpenCF\Algorithms\Similarity\Cosine;
+use OpenCF\Algorithms\Similarity\Cosine;
 use PHPUnit\Framework\TestCase as TestCase;
 
 class CosineTest extends TestCase
