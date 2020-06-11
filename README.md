@@ -3,6 +3,7 @@
 OpenCF - a PHP Item-based Collaborative Filtering Engine.
 
 ![PHP Composer](https://github.com/phpjuice/opencf/workflows/PHP%20Composer/badge.svg?branch=master)
+[![Build Status](https://travis-ci.com/phpjuice/opencf.svg?branch=master)](https://travis-ci.com/phpjuice/opencf)
   
 ## Requirements
 OpenCF Package requires PHP 5.6+
