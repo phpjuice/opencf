@@ -8,7 +8,7 @@ use PHPUnit\Framework\TestCase as TestCase;
 
 class SimilarityTest extends TestCase
 {
-    public function testGetDeviationMethod()
+    public function testGetDeviationMethod():void
     {
         $vector = new Vector();
         $algorithm = new Similarity($vector);

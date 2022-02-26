@@ -9,9 +9,9 @@ use PHPUnit\Framework\TestCase as TestCase;
 
 class PredictorTest extends TestCase
 {
-    protected $dataset;
+    protected array $dataset;
 
-    public function __construct()
+    public function setUp(): void
     {
         $this->dataset = [
             'Item1' => [
@@ -38,7 +38,7 @@ class PredictorTest extends TestCase
         ];
     }
 
-    public function testGetPredictionWithSlopeone()
+    public function testGetPredictionWithSlopeone(): void
     {
         $scheme = new WeightedSlopeone($this->dataset);
         $scheme->buildModel();

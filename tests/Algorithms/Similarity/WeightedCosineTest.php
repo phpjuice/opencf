@@ -4,12 +4,15 @@ namespace OpenCF\Tests\Algorithms\Similarity;
 
 use OpenCF\Algorithms\Similarity\WeightedCosine;
 use PHPUnit\Framework\TestCase as TestCase;
+use ReflectionClass;
+use ReflectionException;
+use ReflectionMethod;
 
 class WeightedCosineTest extends TestCase
 {
-    protected $dataset;
+    protected array $dataset;
 
-    public function __construct()
+    public function setUp(): void
     {
         $this->dataset = [
             'Batman V Superman' => [
@@ -75,14 +78,11 @@ class WeightedCosineTest extends TestCase
         ]; // $this->dataset
     }
 
-    public function testSlopeoneSchemePredictMethod()
+    public function testSlopeoneSchemePredictMethod(): void
     {
         $scheme = new WeightedCosine($this->dataset);
         $scheme->buildModel();
 
-        /**
-         * @var
-         */
         $user1 = [
             'Avatar' => 1,
             'Iron Man' => 2,
@@ -94,9 +94,6 @@ class WeightedCosineTest extends TestCase
         ];
         $this->assertEquals($expected, $scheme->predict($user1));
 
-        /**
-         * @var
-         */
         $user2 = [
             'Batman V Superman' => 2,
             'Iron Man' => 4,
@@ -108,9 +105,6 @@ class WeightedCosineTest extends TestCase
         ];
         $this->assertEquals($expected, $scheme->predict($user2));
 
-        /**
-         * @var
-         */
         $user3 = [
             'Batman V Superman' => 5,
             'Avatar' => 3,
@@ -122,9 +116,6 @@ class WeightedCosineTest extends TestCase
         ];
         $this->assertEquals($expected, $scheme->predict($user3));
 
-        /**
-         * @var
-         */
         $user4 = [
             'Batman V Superman' => 5,
             'Avatar' => 3,
@@ -136,9 +127,6 @@ class WeightedCosineTest extends TestCase
         ];
         $this->assertEquals($expected, $scheme->predict($user4));
 
-        /**
-         * @var
-         */
         $user5 = [
             'Batman V Superman' => 5,
             'Avatar' => 3,
@@ -150,9 +138,6 @@ class WeightedCosineTest extends TestCase
         ];
         $this->assertEquals($expected, $scheme->predict($user5));
 
-        /**
-         * @var
-         */
         $user6 = [
             'Avatar' => 4,
             'Iron Man' => 5,
@@ -164,9 +149,6 @@ class WeightedCosineTest extends TestCase
         ];
         $this->assertEquals($expected, $scheme->predict($user6));
 
-        /**
-         * @var
-         */
         $user7 = [
             'Batman V Superman' => 1,
             'Iron Man' => 5,
@@ -178,9 +160,6 @@ class WeightedCosineTest extends TestCase
         ];
         $this->assertEquals($expected, $scheme->predict($user7));
 
-        /**
-         * @var
-         */
         $user8 = [
             'Batman V Superman' => 3,
             'Avatar' => 2,
@@ -192,9 +171,6 @@ class WeightedCosineTest extends TestCase
         ];
         $this->assertEquals($expected, $scheme->predict($user8));
 
-        /**
-         * @var
-         */
         $user8 = [
             'Batman V Superman' => 2,
             'Avatar' => 4,
@@ -206,9 +182,6 @@ class WeightedCosineTest extends TestCase
         ];
         $this->assertEquals($expected, $scheme->predict($user8));
 
-        /**
-         * @var
-         */
         $user10 = [
             'Batman V Superman' => 4,
             'Avatar' => 2,
@@ -221,16 +194,10 @@ class WeightedCosineTest extends TestCase
         $this->assertEquals($expected, $scheme->predict($user10));
     }
 
-    protected static function getMethod($name)
-    {
-        $class = new \ReflectionClass(WeightedCosine::class);
-        $method = $class->getMethod($name);
-        $method->setAccessible(true);
-
-        return $method;
-    }
-
-    public function testTransposeMatrix()
+    /**
+     * @throws ReflectionException
+     */
+    public function testTransposeMatrix(): void
     {
         $matrix = [
             'Item1' => [
@@ -256,12 +223,25 @@ class WeightedCosineTest extends TestCase
 
         $transpose = self::getMethod('transpose');
         $weightedCosine = new WeightedCosine($matrix);
-        $results = $transpose
-              ->invokeArgs($weightedCosine, [null]);
+        $results = $transpose->invokeArgs($weightedCosine, [null]);
 
         $this->assertEquals(
             $results,
             $expectedMatrix
         );
+    }
+
+    /**
+     * @param  string  $name
+     * @return ReflectionMethod
+     * @throws ReflectionException
+     */
+    protected static function getMethod(string $name): ReflectionMethod
+    {
+        $class = new ReflectionClass(WeightedCosine::class);
+        $method = $class->getMethod($name);
+        $method->setAccessible(true);
+
+        return $method;
     }
 }

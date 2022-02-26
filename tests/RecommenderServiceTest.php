@@ -12,13 +12,13 @@ use PHPUnit\Framework\TestCase as TestCase;
 
 class RecommenderServiceTest extends TestCase
 {
-    public function testConstructorWithEmptyDataset()
+    public function testConstructorWithEmptyDataset(): void
     {
         $this->expectException(EmptyDatasetException::class);
-        $recommenderService = new RecommenderService([]);
+        new RecommenderService([]);
     }
 
-    public function testRegisterNotSupportedRecommender()
+    public function testRegisterNotSupportedRecommender(): void
     {
         $this->expectException(NotRegisteredRecommenderException::class);
         $dataset = [
@@ -28,7 +28,7 @@ class RecommenderServiceTest extends TestCase
         $recommenderService->getRecommender('Cosine');
     }
 
-    public function testRegisterSupportedRecommender()
+    public function testRegisterSupportedRecommender(): void
     {
         $dataset = [
             'item1' => ['rating1' => 4],
@@ -36,19 +36,19 @@ class RecommenderServiceTest extends TestCase
         $recommenderService = new RecommenderService($dataset);
 
         // instance of cosine
-        $instance = $recommenderService->registerRecommender('Cosine');
-        $this->assertInstanceOf(Cosine::class, $instance);
+        $recommenderService->registerRecommender('Cosine');
+        $this->assertInstanceOf(Cosine::class, $recommenderService->getRecommender('Cosine'));
 
         // instance of weighted cosine
-        $instance = $recommenderService->registerRecommender('WeightedCosine');
-        $this->assertInstanceOf(WeightedCosine::class, $instance);
+        $recommenderService->registerRecommender('WeightedCosine');
+        $this->assertInstanceOf(WeightedCosine::class, $recommenderService->getRecommender('WeightedCosine'));
 
         // instance of weighted cosine
-        $instance = $recommenderService->registerRecommender('WeightedSlopeone');
-        $this->assertInstanceOf(WeightedSlopeone::class, $instance);
+        $recommenderService->registerRecommender('WeightedSlopeone');
+        $this->assertInstanceOf(WeightedSlopeone::class, $recommenderService->getRecommender('WeightedSlopeone'));
     }
 
-    public function testGetRecommender()
+    public function testGetRecommender(): void
     {
         $this->expectException(NotRegisteredRecommenderException::class);
         $dataset = [
@@ -58,7 +58,7 @@ class RecommenderServiceTest extends TestCase
         $recommenderService->getRecommender('Cosine');
     }
 
-    public function testGetRegisteredRecommender()
+    public function testGetRegisteredRecommender(): void
     {
         $dataset = [
             'item1' => ['rating1' => 4],

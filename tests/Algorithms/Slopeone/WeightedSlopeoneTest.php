@@ -7,9 +7,9 @@ use PHPUnit\Framework\TestCase as TestCase;
 
 class WeightedSlopeoneTest extends TestCase
 {
-    protected $dataset;
+    protected array $dataset;
 
-    public function __construct()
+    public function setUp(): void
     {
         $this->dataset = [
             'Batman V Superman' => [
@@ -75,14 +75,11 @@ class WeightedSlopeoneTest extends TestCase
         ]; // $this->dataset
     }
 
-    public function testSlopeoneSchemePredictMethod()
+    public function testSlopeoneSchemePredictMethod(): void
     {
         $scheme = new WeightedSlopeone($this->dataset);
         $scheme->buildModel();
 
-        /**
-         * @var
-         */
         $user1 = [
             'Avatar' => 1,
             'Iron Man' => 2,
@@ -94,9 +91,6 @@ class WeightedSlopeoneTest extends TestCase
         ];
         $this->assertEquals($expected, $scheme->predict($user1));
 
-        /**
-         * @var
-         */
         $user2 = [
             'Batman V Superman' => 2,
             'Iron Man' => 4,
@@ -108,9 +102,6 @@ class WeightedSlopeoneTest extends TestCase
         ];
         $this->assertEquals($expected, $scheme->predict($user2));
 
-        /**
-         * @var
-         */
         $user3 = [
             'Batman V Superman' => 5,
             'Avatar' => 3,
@@ -122,9 +113,6 @@ class WeightedSlopeoneTest extends TestCase
         ];
         $this->assertEquals($expected, $scheme->predict($user3));
 
-        /**
-         * @var
-         */
         $user4 = [
             'Batman V Superman' => 5,
             'Avatar' => 3,
@@ -136,9 +124,6 @@ class WeightedSlopeoneTest extends TestCase
         ];
         $this->assertEquals($expected, $scheme->predict($user4));
 
-        /**
-         * @var
-         */
         $user5 = [
             'Batman V Superman' => 5,
             'Avatar' => 3,
@@ -150,9 +135,6 @@ class WeightedSlopeoneTest extends TestCase
         ];
         $this->assertEquals($expected, $scheme->predict($user5));
 
-        /**
-         * @var
-         */
         $user6 = [
             'Avatar' => 4,
             'Iron Man' => 5,
@@ -164,9 +146,6 @@ class WeightedSlopeoneTest extends TestCase
         ];
         $this->assertEquals($expected, $scheme->predict($user6));
 
-        /**
-         * @var
-         */
         $user7 = [
             'Batman V Superman' => 1,
             'Iron Man' => 5,
@@ -178,9 +157,6 @@ class WeightedSlopeoneTest extends TestCase
         ];
         $this->assertEquals($expected, $scheme->predict($user7));
 
-        /**
-         * @var
-         */
         $user8 = [
             'Batman V Superman' => 3,
             'Avatar' => 2,
@@ -192,9 +168,6 @@ class WeightedSlopeoneTest extends TestCase
         ];
         $this->assertEquals($expected, $scheme->predict($user8));
 
-        /**
-         * @var
-         */
         $user8 = [
             'Batman V Superman' => 2,
             'Avatar' => 4,
@@ -206,9 +179,6 @@ class WeightedSlopeoneTest extends TestCase
         ];
         $this->assertEquals($expected, $scheme->predict($user8));
 
-        /**
-         * @var
-         */
         $user10 = [
             'Batman V Superman' => 4,
             'Avatar' => 2,

@@ -111,8 +111,8 @@ abstract class Recommender implements IRecommender
     }
 
     /** @inheritdoc */
-    public function getModel(): ?array
+    public function getModel(): array
     {
-        return $this->model;
+        return $this->model ?? [];
     }
 }

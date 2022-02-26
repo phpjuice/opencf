@@ -8,7 +8,7 @@ use PHPUnit\Framework\TestCase as TestCase;
 
 class SimilarityTest extends TestCase
 {
-    public function testGetSimilarity()
+    public function testGetSimilarity(): void
     {
         $vector = new Vector();
         $algorithm = new Similarity($vector);
@@ -32,7 +32,7 @@ class SimilarityTest extends TestCase
         $this->assertNotEquals(1, $results);
     }
 
-    public function testGetSimilarityWithMean()
+    public function testGetSimilarityWithMean(): void
     {
         $vector = new Vector();
         $vector->setMeanVector([

@@ -16,7 +16,7 @@ interface IRecommender
      *
      * @return array
      */
-    public function getModel(): ?array;
+    public function getModel(): array;
 
     /**
      * compute a model based on a training set.
