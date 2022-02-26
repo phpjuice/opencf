@@ -22,8 +22,8 @@ class RecommenderServiceTest extends TestCase
     {
         $this->expectException(NotRegisteredRecommenderException::class);
         $dataset = [
-      'item1' => ['rating1' => 4],
-    ];
+            'item1' => ['rating1' => 4],
+        ];
         $recommenderService = new RecommenderService($dataset);
         $recommenderService->getRecommender('Cosine');
     }
@@ -31,8 +31,8 @@ class RecommenderServiceTest extends TestCase
     public function testRegisterSupportedRecommender()
     {
         $dataset = [
-      'item1' => ['rating1' => 4],
-    ];
+            'item1' => ['rating1' => 4],
+        ];
         $recommenderService = new RecommenderService($dataset);
 
         // instance of cosine
@@ -52,8 +52,8 @@ class RecommenderServiceTest extends TestCase
     {
         $this->expectException(NotRegisteredRecommenderException::class);
         $dataset = [
-      'item1' => ['rating1' => 4],
-    ];
+            'item1' => ['rating1' => 4],
+        ];
         $recommenderService = new RecommenderService($dataset);
         $recommenderService->getRecommender('Cosine');
     }
@@ -61,8 +61,8 @@ class RecommenderServiceTest extends TestCase
     public function testGetRegisteredRecommender()
     {
         $dataset = [
-      'item1' => ['rating1' => 4],
-    ];
+            'item1' => ['rating1' => 4],
+        ];
         $recommenderService = new RecommenderService($dataset);
         $recommenderService->registerRecommender('Cosine');
         $instance = $recommenderService->getRecommender('Cosine');

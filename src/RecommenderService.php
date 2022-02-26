@@ -63,11 +63,11 @@ class RecommenderService implements IRecommenderService
     }
 
     /**
-     * {@inheritdoc}
+     * @inheritdoc
      */
-    public function getRecommender($name)
+    public function getRecommender(string $name)
     {
-        if (!array_key_exists($name, $this->engines)) {
+        if (! array_key_exists($name, $this->engines)) {
             throw new NotRegisteredRecommenderException(sprintf('The Recommendation engine "%s" is not registered in the Recommender Service', $name));
         }
 
@@ -75,11 +75,11 @@ class RecommenderService implements IRecommenderService
     }
 
     /**
-     * {@inheritdoc}
+     * @inheritdoc
      */
-    public function registerRecommender($name)
+    public function registerRecommender(string $name)
     {
-        if (!in_array($name, $this->supportedEngines)) {
+        if (! in_array($name, $this->supportedEngines)) {
             throw new NotSupportedSchemeException(sprintf('The Recommendation engine "%s" is not supported yet', $name));
         }
         switch ($name) {

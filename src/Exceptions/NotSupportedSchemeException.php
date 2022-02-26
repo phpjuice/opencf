@@ -2,6 +2,8 @@
 
 namespace OpenCF\Exceptions;
 
-class NotSupportedSchemeException extends \InvalidArgumentException
+use InvalidArgumentException;
+
+class NotSupportedSchemeException extends InvalidArgumentException
 {
 }

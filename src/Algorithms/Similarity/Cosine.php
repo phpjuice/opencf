@@ -6,18 +6,14 @@ use OpenCF\Algorithms\Recommender;
 
 class Cosine extends Recommender
 {
-    /**
-     * {@inheritdoc}
-     */
-    public function name()
+    /** @inheritdoc */
+    public function name(): string
     {
         return 'Cosine';
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    public function buildModel()
+    /** @inheritdoc */
+    public function buildModel(): self
     {
         $this->similarityFunction = new Similarity($this->vector);
         parent::buildModel();
@@ -25,8 +21,10 @@ class Cosine extends Recommender
         // we pass it to the predictor
         $this->predictor = new Predictor(
             $this->dataset,
-            $this->model,
+            $this->model ?? [],
             $this->vector
         );
+
+        return $this;
     }
 }

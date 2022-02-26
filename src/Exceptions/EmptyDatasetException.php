@@ -2,6 +2,8 @@
 
 namespace OpenCF\Exceptions;
 
-class EmptyDatasetException extends \InvalidArgumentException
+use InvalidArgumentException;
+
+class EmptyDatasetException extends InvalidArgumentException
 {
 }

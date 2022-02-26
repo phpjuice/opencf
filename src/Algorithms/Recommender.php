@@ -2,7 +2,12 @@
 
 namespace OpenCF\Algorithms;
 
+use Exception;
+use InvalidArgumentException;
+use OpenCF\Contracts\IPredictor;
 use OpenCF\Contracts\IRecommender;
+use OpenCF\Contracts\ISimilarity;
+use OpenCF\Contracts\IVector;
 use OpenCF\Support\Vector;
 
 abstract class Recommender implements IRecommender
@@ -12,58 +17,56 @@ abstract class Recommender implements IRecommender
      *
      * @var array[][]
      */
-    protected $dataset;
+    protected array $dataset;
 
     /**
      * model.
      *
      * @var array[][]
      */
-    protected $model;
+    protected ?array $model;
 
     /**
      * a measure function to calculate similarity.
      *
-     * @var similarityFunction
+     * @var ISimilarity
      */
-    protected $similarityFunction;
+    protected ISimilarity $similarityFunction;
 
     /**
      * Predictor.
      *
-     * @var \OpenCF\Contracts\IPredictor
+     * @var IPredictor
      */
-    protected $predictor;
+    protected IPredictor $predictor;
 
     /**
      * vector calculations provider.
      *
-     * @var Vector
+     * @var IVector
      */
-    protected $vector;
+    protected IVector $vector;
 
     /**
-     * @param array $dataset training set
-     * @param array $model   optional: previous model
+     * @param  array  $dataset  training set
+     * @param  array|null  $model  optional: previous model
      */
     public function __construct(
-        $dataset,
-        $model = null
+        array $dataset,
+        array $model = null
     ) {
         $this->dataset = $dataset;
         $this->model = $model;
         $this->vector = new Vector();
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    public function buildModel()
+    /** @inheritdoc */
+    public function buildModel(): self
     {
         foreach ($this->dataset as $k1 => $r1) {
             foreach ($this->dataset as $k2 => $r2) {
                 // if we are comparing the item
-                // to it's slef we skip it
+                // to its self we skip it
                 if ($k1 === $k2) {
                     continue;
                 }
@@ -75,9 +78,9 @@ abstract class Recommender implements IRecommender
                 try {
                     // save the measure to the model
                     $this->model[$k1][$k2] =
-          $this->similarityFunction
-               ->getSimilarity($vectors[0], $vectors[1]);
-                } catch (\InvalidArgumentException $e) {
+                        $this->similarityFunction
+                            ->getSimilarity($vectors[0], $vectors[1]);
+                } catch (InvalidArgumentException $e) {
                     continue;
                 }
             }
@@ -86,22 +89,20 @@ abstract class Recommender implements IRecommender
         return $this;
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    public function predict(array $evaluation)
+    /** @inheritdoc */
+    public function predict(array $userRatings): array
     {
         $predictions = [];
-        foreach ($this->model as $key => $items) {
+        foreach ($this->model ?? [] as $key => $items) {
             // if the rating is present in the
             // evaluation given by the user we skip
-            if (isset($evaluation[$key])) {
+            if (isset($userRatings[$key])) {
                 continue;
             }
             try {
                 $predictions[$key] = $this->predictor
-                            ->getPrediction($evaluation, $key);
-            } catch (\Exception $e) {
+                    ->getPrediction($userRatings, $key);
+            } catch (Exception $e) {
                 continue;
             }
         }
@@ -109,10 +110,8 @@ abstract class Recommender implements IRecommender
         return $predictions;
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    public function getModel()
+    /** @inheritdoc */
+    public function getModel(): ?array
     {
         return $this->model;
     }

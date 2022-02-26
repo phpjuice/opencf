@@ -2,15 +2,16 @@
 
 namespace OpenCF\Algorithms\Similarity;
 
+use InvalidArgumentException;
 use OpenCF\Contracts\ISimilarity;
 use OpenCF\Contracts\IVector;
 
 class Similarity implements ISimilarity
 {
-    protected $vector;
+    protected IVector $vector;
 
     /**
-     * @param IVector $vector service provier
+     * @param  IVector  $vector  service provider
      */
     public function __construct(IVector $vector)
     {
@@ -20,11 +21,10 @@ class Similarity implements ISimilarity
     /**
      * calculate the cosine similarity between 2 vectors.
      *
-     * @throws \InvalidArgumentException
-     *
      * @return float similarity value
+     * @throws InvalidArgumentException
      */
-    public function getSimilarity(array $xVector, array $yVector)
+    public function getSimilarity(array $xVector, array $yVector): float
     {
         // get the cardinal intersecting the 2 vectors
         $card = $this->vector->card(
@@ -34,7 +34,7 @@ class Similarity implements ISimilarity
 
         // handle Exceptions
         if ($card <= 1) {
-            throw new \InvalidArgumentException('Vectors must have at least 2 point');
+            throw new InvalidArgumentException('Vectors must have at least 2 point');
         }
 
         $dotProduct = $this->vector->dotProduct(
@@ -42,14 +42,14 @@ class Similarity implements ISimilarity
             $yVector
         );
 
-        $denom1 = $this->vector->norm($xVector);
-        $denom2 = $this->vector->norm($yVector);
-        $denom = $denom1 * $denom2;
+        $denominator1 = $this->vector->norm($xVector);
+        $denominator2 = $this->vector->norm($yVector);
+        $denominator = $denominator1 * $denominator2;
 
-        if ($denom > 0) {
+        if ($denominator > 0) {
             $scale = $this->vector->getScale();
 
-            return round(($dotProduct / $denom), $scale);
+            return round(($dotProduct / $denominator), $scale);
         }
 
         return 0;

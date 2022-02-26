@@ -7,17 +7,17 @@ use OpenCF\Algorithms\Recommender;
 class WeightedSlopeone extends Recommender
 {
     /**
-     * {@inheritdoc}
+     * @inheritdoc
      */
-    public function name()
+    public function name(): string
     {
         return 'WeightedSlopeone';
     }
 
     /**
-     * {@inheritdoc}
+     * @inheritdoc
      */
-    public function buildModel()
+    public function buildModel(): self
     {
         $this->similarityFunction = new Similarity($this->vector);
         parent::buildModel();
@@ -25,8 +25,10 @@ class WeightedSlopeone extends Recommender
         // we pass it to the predictor
         $this->predictor = new Predictor(
             $this->dataset,
-            $this->model,
+            $this->model ?? [],
             $this->vector
         );
+
+        return $this;
     }
 }

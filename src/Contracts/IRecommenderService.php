@@ -2,25 +2,26 @@
 
 namespace OpenCF\Contracts;
 
+use OpenCF\Exceptions\NotRegisteredRecommenderException;
+
 interface IRecommenderService
 {
     /**
      * Returns a registered recommender instance.
      *
-     * @param string $name
+     * @param  string  $name
      *
+     * @return IRecommender
      * @throws NotRegisteredRecommenderException
-     *
-     * @return OpenCF\Contracts\IRecommender
      */
-    public function getRecommender($name);
+    public function getRecommender(string $name): IRecommender;
 
     /**
      * Registers a Recommender instance for later use.
      *
-     * @param string $name recommender used to build the model
+     * @param  string  $name  recommender used to build the model
      *
      * @return $this
      */
-    public function registerRecommender($name);
+    public function registerRecommender(string $name): self;
 }
