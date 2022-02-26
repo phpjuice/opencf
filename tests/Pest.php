@@ -34,15 +34,3 @@
 | global functions to help you to reduce the number of lines of code in your test files.
 |
 */
-function transpose($dataset): array
-{
-    $out = [];
-
-    foreach ($dataset as $item => $ratings) {
-        foreach ($ratings as $key => $value) {
-            $out[$key][$item] = $value;
-        }
-    }
-
-    return $out;
-}

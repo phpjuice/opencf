@@ -2,28 +2,27 @@
 
 namespace OpenCF\Tests\Support;
 
-use InvalidArgumentException;
 use OpenCF\Support\Vector;
 use PHPUnit\Framework\TestCase as TestCase;
 
 class VectorTest extends TestCase
 {
-    private $vector;
+    private Vector $vector;
 
-    public function __construct()
+    public function setUp(): void
     {
         // construct a vector
         $this->vector = new Vector();
     }
 
-    public function testSetScaleMethod()
+    public function testSetScaleMethod(): void
     {
         $this->assertEquals(2, $this->vector->getScale());
         $this->vector->setScale(3);
         $this->assertEquals(3, $this->vector->getScale());
     }
 
-    public function testConstructorMethod()
+    public function testConstructorMethod(): void
     {
         $vector = new Vector(3);
         $this->assertEquals(3, $vector->getScale());
@@ -32,14 +31,9 @@ class VectorTest extends TestCase
         $vector = new Vector(null, [1, 3, 3]);
         $this->assertEquals(2, $vector->getScale());
         $this->assertEquals([1, 3, 3], $vector->getMeanVector());
-
-        $this->expectException(InvalidArgumentException::class);
-        $this->vector->setScale([]);
-        $this->vector->setScale('33');
-        $this->vector->setScale(33);
     }
 
-    public function testIsSparseMethod()
+    public function testIsSparseMethod(): void
     {
         $xVector = [
             'item1' => 2,
@@ -54,7 +48,7 @@ class VectorTest extends TestCase
         $this->assertFalse($this->vector->isSparse($xVector, $xVector));
     }
 
-    public function testIntersectMethod()
+    public function testIntersectMethod(): void
     {
         $expected = [
             [
@@ -80,7 +74,7 @@ class VectorTest extends TestCase
         $this->assertEquals($expected, $results);
     }
 
-    public function testDotProductWithCompatibleVectors()
+    public function testDotProductWithCompatibleVectors(): void
     {
         $xVector = [
             'item1' => 5,
@@ -102,7 +96,7 @@ class VectorTest extends TestCase
         $this->assertEquals(0, $this->vector->dotProduct([], []));
     }
 
-    public function testDotProductWithMeanVector()
+    public function testDotProductWithMeanVector(): void
     {
         $xVector = [
             'item1' => 1,
@@ -124,7 +118,7 @@ class VectorTest extends TestCase
         $this->assertEquals(-0.00, $results);
     }
 
-    public function testNormMethod()
+    public function testNormMethod(): void
     {
         $vector = [
             'item1' => 2,
@@ -134,7 +128,7 @@ class VectorTest extends TestCase
         $this->assertEquals(2.83, $results);
     }
 
-    public function testNormMethodWithMean()
+    public function testNormMethodWithMean(): void
     {
         $vector = [
             'item1' => 1,
@@ -150,7 +144,7 @@ class VectorTest extends TestCase
         $this->assertEquals(0.52, $this->vector->norm($vector));
     }
 
-    public function testSumMethod()
+    public function testSumMethod(): void
     {
         $vector = [
             'item1' => 2,
@@ -166,7 +160,7 @@ class VectorTest extends TestCase
         $this->assertEquals(2, $this->vector->sum($vector));
     }
 
-    public function testAverageMethod()
+    public function testAverageMethod(): void
     {
         $vector = [
             'item1' => 2,
@@ -182,7 +176,7 @@ class VectorTest extends TestCase
         $this->assertEquals(1, $this->vector->average($vector));
     }
 
-    public function testDiffMethod()
+    public function testDiffMethod(): void
     {
         $x = [
             'item1' => 1,
@@ -210,7 +204,7 @@ class VectorTest extends TestCase
         $this->assertEquals(0.01, $this->vector->diff($x, $y));
     }
 
-    public function testCardMethod()
+    public function testCardMethod(): void
     {
         $x = [
             'item1' => 0.5,
@@ -227,7 +221,7 @@ class VectorTest extends TestCase
         $this->assertEquals(2, $this->vector->card($x, $y));
     }
 
-    public function testRmseMethod()
+    public function testRmseMethod(): void
     {
         $x = [
             'item1' => 3,
