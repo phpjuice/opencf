@@ -1,246 +1,223 @@
 <?php
 
-namespace OpenCF\Tests\Support;
-
 use OpenCF\Support\Vector;
-use PHPUnit\Framework\TestCase as TestCase;
+beforeEach(function () {
+    // construct a vector
+    $this->vector = new Vector();
+});
 
-class VectorTest extends TestCase
-{
-    private Vector $vector;
+test('set scale method', function () {
+    expect($this->vector->getScale())->toEqual(2);
+    $this->vector->setScale(3);
+    expect($this->vector->getScale())->toEqual(3);
+});
 
-    public function setUp(): void
-    {
-        // construct a vector
-        $this->vector = new Vector();
-    }
+test('constructor method', function () {
+    $vector = new Vector(3);
+    expect($vector->getScale())->toEqual(3);
+    expect($vector->getMeanVector())->toEqual([]);
 
-    public function testSetScaleMethod(): void
-    {
-        $this->assertEquals(2, $this->vector->getScale());
-        $this->vector->setScale(3);
-        $this->assertEquals(3, $this->vector->getScale());
-    }
+    $vector = new Vector(null, [1, 3, 3]);
+    expect($vector->getScale())->toEqual(2);
+    expect($vector->getMeanVector())->toEqual([1, 3, 3]);
+});
 
-    public function testConstructorMethod(): void
-    {
-        $vector = new Vector(3);
-        $this->assertEquals(3, $vector->getScale());
-        $this->assertEquals([], $vector->getMeanVector());
+test('is sparse method', function () {
+    $xVector = [
+        'item1' => 2,
+        'item2' => 2,
+        'item3' => 3,
+    ];
+    $yVector = [
+        'item1' => 2,
+        'item2' => 2,
+    ];
+    expect($this->vector->isSparse($xVector, $yVector))->toBeTrue();
+    expect($this->vector->isSparse($xVector, $xVector))->toBeFalse();
+});
 
-        $vector = new Vector(null, [1, 3, 3]);
-        $this->assertEquals(2, $vector->getScale());
-        $this->assertEquals([1, 3, 3], $vector->getMeanVector());
-    }
-
-    public function testIsSparseMethod(): void
-    {
-        $xVector = [
+test('intersect method', function () {
+    $expected = [
+        [
             'item1' => 2,
             'item2' => 2,
-            'item3' => 3,
-        ];
-        $yVector = [
+        ],
+        [
             'item1' => 2,
             'item2' => 2,
-        ];
-        $this->assertTrue($this->vector->isSparse($xVector, $yVector));
-        $this->assertFalse($this->vector->isSparse($xVector, $xVector));
-    }
+        ],
+    ];
+    $xVector = [
+        'item1' => 2,
+        'item2' => 2,
+        'item3' => 3,
+    ];
+    $yVector = [
+        'item1' => 2,
+        'item2' => 2,
+        'item4' => 3,
+    ];
+    $results = $this->vector->intersect($xVector, $yVector);
+    expect($results)->toEqual($expected);
+});
 
-    public function testIntersectMethod(): void
-    {
-        $expected = [
-            [
-                'item1' => 2,
-                'item2' => 2,
-            ],
-            [
-                'item1' => 2,
-                'item2' => 2,
-            ],
-        ];
-        $xVector = [
-            'item1' => 2,
-            'item2' => 2,
-            'item3' => 3,
-        ];
-        $yVector = [
-            'item1' => 2,
-            'item2' => 2,
-            'item4' => 3,
-        ];
-        $results = $this->vector->intersect($xVector, $yVector);
-        $this->assertEquals($expected, $results);
-    }
+test('dot product with compatible vectors', function () {
+    $xVector = [
+        'item1' => 5,
+        'item2' => 4,
+    ];
 
-    public function testDotProductWithCompatibleVectors(): void
-    {
-        $xVector = [
-            'item1' => 5,
-            'item2' => 4,
-        ];
+    $results = $this->vector->dotProduct($xVector, $xVector);
+    expect($results)->toEqual(41);
 
-        $results = $this->vector->dotProduct($xVector, $xVector);
-        $this->assertEquals(41, $results);
+    $xVector = [
+        'item1' => 0.444,
+        'item2' => 1.233,
+    ];
 
-        $xVector = [
-            'item1' => 0.444,
-            'item2' => 1.233,
-        ];
+    $this->vector->setScale(2);
 
-        $this->vector->setScale(2);
+    $results = $this->vector->dotProduct($xVector, $xVector);
+    expect($results)->toEqual(1.72);
+    expect($this->vector->dotProduct([], []))->toEqual(0);
+});
 
-        $results = $this->vector->dotProduct($xVector, $xVector);
-        $this->assertEquals(1.72, $results);
-        $this->assertEquals(0, $this->vector->dotProduct([], []));
-    }
+test('dot product with mean vector', function () {
+    $xVector = [
+        'item1' => 1,
+        'item2' => 0.2,
+    ];
 
-    public function testDotProductWithMeanVector(): void
-    {
-        $xVector = [
-            'item1' => 1,
-            'item2' => 0.2,
-        ];
+    $yVector = [
+        'item1' => 0.5,
+        'item2' => 0.4,
+    ];
 
-        $yVector = [
-            'item1' => 0.5,
-            'item2' => 0.4,
-        ];
+    $meanVector = [
+        'item1' => 0.566666,
+        'item2' => 0.5,
+    ];
 
-        $meanVector = [
-            'item1' => 0.566666,
-            'item2' => 0.5,
-        ];
+    $this->vector->setMeanVector($meanVector);
+    $results = $this->vector->dotProduct($xVector, $yVector);
+    expect($results)->toEqual(-0.00);
+});
 
-        $this->vector->setMeanVector($meanVector);
-        $results = $this->vector->dotProduct($xVector, $yVector);
-        $this->assertEquals(-0.00, $results);
-    }
+test('norm method', function () {
+    $vector = [
+        'item1' => 2,
+        'item2' => 2,
+    ];
+    $results = $this->vector->norm($vector);
+    expect($results)->toEqual(2.83);
+});
 
-    public function testNormMethod(): void
-    {
-        $vector = [
-            'item1' => 2,
-            'item2' => 2,
-        ];
-        $results = $this->vector->norm($vector);
-        $this->assertEquals(2.83, $results);
-    }
+test('norm method with mean', function () {
+    $vector = [
+        'item1' => 1,
+        'item2' => 0.2,
+    ];
 
-    public function testNormMethodWithMean(): void
-    {
-        $vector = [
-            'item1' => 1,
-            'item2' => 0.2,
-        ];
+    $meanVector = [
+        'item1' => 0.56666,
+        'item2' => 0.5,
+    ];
 
-        $meanVector = [
-            'item1' => 0.56666,
-            'item2' => 0.5,
-        ];
+    $this->vector->setMeanVector($meanVector);
+    expect($this->vector->norm($vector))->toEqual(0.52);
+});
 
-        $this->vector->setMeanVector($meanVector);
-        $this->assertEquals(0.52, $this->vector->norm($vector));
-    }
+test('sum method', function () {
+    $vector = [
+        'item1' => 2,
+        'item2' => 2,
+    ];
+    expect($this->vector->sum($vector))->toEqual(4);
+    expect($this->vector->sum([]))->toEqual(0);
 
-    public function testSumMethod(): void
-    {
-        $vector = [
-            'item1' => 2,
-            'item2' => 2,
-        ];
-        $this->assertEquals(4, $this->vector->sum($vector));
-        $this->assertEquals(0, $this->vector->sum([]));
+    $vector = [
+        'item1' => 0.5666666666,
+        'item2' => 1.433333333,
+    ];
+    expect($this->vector->sum($vector))->toEqual(2);
+});
 
-        $vector = [
-            'item1' => 0.5666666666,
-            'item2' => 1.433333333,
-        ];
-        $this->assertEquals(2, $this->vector->sum($vector));
-    }
+test('average method', function () {
+    $vector = [
+        'item1' => 2,
+        'item2' => 2,
+    ];
+    expect($this->vector->average($vector))->toEqual(2);
+    expect($this->vector->average([]))->toEqual(0);
 
-    public function testAverageMethod(): void
-    {
-        $vector = [
-            'item1' => 2,
-            'item2' => 2,
-        ];
-        $this->assertEquals(2, $this->vector->average($vector));
-        $this->assertEquals(0, $this->vector->average([]));
+    $vector = [
+        'item1' => 0.5666666666,
+        'item2' => 1.433333333,
+    ];
+    expect($this->vector->average($vector))->toEqual(1);
+});
 
-        $vector = [
-            'item1' => 0.5666666666,
-            'item2' => 1.433333333,
-        ];
-        $this->assertEquals(1, $this->vector->average($vector));
-    }
+test('diff method', function () {
+    $x = [
+        'item1' => 1,
+        'item2' => 1,
+        'item3' => 0.2,
+    ];
+    $y = [
+        'item1' => 0.2,
+        'item2' => 0.5,
+        'item3' => 1,
+    ];
+    expect($this->vector->diff($x, $y))->toEqual(0.5);
+    expect($this->vector->diff([], []))->toEqual(0);
 
-    public function testDiffMethod(): void
-    {
-        $x = [
-            'item1' => 1,
-            'item2' => 1,
-            'item3' => 0.2,
-        ];
-        $y = [
-            'item1' => 0.2,
-            'item2' => 0.5,
-            'item3' => 1,
-        ];
-        $this->assertEquals(0.5, $this->vector->diff($x, $y));
-        $this->assertEquals(0, $this->vector->diff([], []));
+    $x = [
+        'item1' => 0.5666666666,
+        'item2' => 1.433333333,
+    ];
 
-        $x = [
-            'item1' => 0.5666666666,
-            'item2' => 1.433333333,
-        ];
+    $y = [
+        'item1' => 0.23,
+        'item2' => 1.76,
+    ];
+    expect($this->vector->diff($x, $x))->toEqual(0);
+    expect($this->vector->diff($x, $y))->toEqual(0.01);
+});
 
-        $y = [
-            'item1' => 0.23,
-            'item2' => 1.76,
-        ];
-        $this->assertEquals(0, $this->vector->diff($x, $x));
-        $this->assertEquals(0.01, $this->vector->diff($x, $y));
-    }
+test('card method', function () {
+    $x = [
+        'item1' => 0.5,
+        'item2' => 1.4,
+        'item3' => 1.4,
+    ];
 
-    public function testCardMethod(): void
-    {
-        $x = [
-            'item1' => 0.5,
-            'item2' => 1.4,
-            'item3' => 1.4,
-        ];
+    $y = [
+        'item1' => 0.23,
+        'item2' => 1.76,
+        'item4' => 3.4,
+    ];
 
-        $y = [
-            'item1' => 0.23,
-            'item2' => 1.76,
-            'item4' => 3.4,
-        ];
+    expect($this->vector->card($x, $y))->toEqual(2);
+});
 
-        $this->assertEquals(2, $this->vector->card($x, $y));
-    }
-
-    public function testRmseMethod(): void
-    {
-        $x = [
-            'item1' => 3,
-            'item2' => 2,
-            'item3' => 3,
-        ];
-        $y = [
-            'item4' => 2,
-            'item5' => 2,
-            'item6' => 3,
-        ];
-        $this->assertEquals(0, $this->vector->rmse($x, $y));
-        $this->assertEquals(0, $this->vector->rmse($x, $x));
-        $x = [
-            'item1' => 5,
-        ];
-        $y = [
-            'item1' => 2.1,
-        ];
-        $this->assertEquals(2.9, $this->vector->rmse($x, $y));
-    }
-}
+test('rmse method', function () {
+    $x = [
+        'item1' => 3,
+        'item2' => 2,
+        'item3' => 3,
+    ];
+    $y = [
+        'item4' => 2,
+        'item5' => 2,
+        'item6' => 3,
+    ];
+    expect($this->vector->rmse($x, $y))->toEqual(0);
+    expect($this->vector->rmse($x, $x))->toEqual(0);
+    $x = [
+        'item1' => 5,
+    ];
+    $y = [
+        'item1' => 2.1,
+    ];
+    expect($this->vector->rmse($x, $y))->toEqual(2.9);
+});
