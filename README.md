@@ -21,8 +21,12 @@ composer require phpjuice/opencf
 
 ## Usage
 
-OpenCF Package is designed to be very simple and straightforward to use. All you have to do is to load rating data, then
-predict future ratings based on the training set provided.
+OpenCF Package is designed to be very simple and straightforward to use. All you have to do is:
+
+1. Load training set
+2. Select recommendation engine
+3. Build a model
+4. Predict future ratings based on the training set provided
 
 ### Create Recommender Service
 
@@ -100,7 +104,7 @@ $recommenderService->setDataset($dataset);
 ### Getting Predictions
 
 All you have to do to predict ratings for a new user is to retrieve an engine from the recommender service and
-run `predict()` method.
+, build the model & run the `predict()` method.
 
 ```php
 // Get engine
@@ -155,6 +159,7 @@ If you discover any security related issues, please email author instead of usin
 
 - [Daniel Lemire](https://github.com/lemire)
 - [SlopeOne Predictors for Online Rating-Based Collaborative Filtering](https://www.researchgate.net/publication/1960789_Slope_One_Predictors_for_Online_Rating-Based_Collaborative_Filtering)
+- [Distance Weighted Cosine Similarity](https://link.springer.com/chapter/10.1007/978-3-642-41278-3_74)
 
 ## Versioning
 
