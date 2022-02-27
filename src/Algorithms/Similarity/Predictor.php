@@ -6,10 +6,7 @@ use OpenCF\Algorithms\Predictor as AbstractPredictor;
 
 class Predictor extends AbstractPredictor
 {
-    /**
-     * {@inheritdoc}
-     */
-    public function getPrediction(array $evaluation, $target)
+    public function getPrediction(array $evaluation, string $target): float
     {
         // intersect rated elements by the user
         // with sim vector of the target element

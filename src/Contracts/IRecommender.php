@@ -7,30 +7,30 @@ interface IRecommender
     /**
      * return's the name of the scheme.
      *
-     * @return string scheme name
+     * @return string
      */
-    public function name();
+    public function name(): string;
 
     /**
      * get the computed model.
      *
-     * @return array model
+     * @return array
      */
-    public function getModel();
+    public function getModel(): array;
 
     /**
      * compute a model based on a training set.
      *
-     * @return array model
+     * @return self
      */
-    public function buildModel();
+    public function buildModel(): self;
 
     /**
      * predict future ratings based on a model.
      *
-     * @param array $userRatings user evaluation
+     * @param  array  $userRatings  user evaluation
      *
-     * @return array Predictions
+     * @return array
      */
-    public function predict(array $userRatings);
+    public function predict(array $userRatings): array;
 }

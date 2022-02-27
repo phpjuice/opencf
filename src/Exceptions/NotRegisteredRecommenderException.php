@@ -2,6 +2,8 @@
 
 namespace OpenCF\Exceptions;
 
-class NotRegisteredRecommenderException extends \InvalidArgumentException
+use InvalidArgumentException;
+
+class NotRegisteredRecommenderException extends InvalidArgumentException
 {
 }

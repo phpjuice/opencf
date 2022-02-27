@@ -1,27 +1,32 @@
 {
-    "name": "opencf/opencf",
+    "name": "phpjuice/opencf",
     "description": "OpenCF - an Item-based Collaborative Filtering Engine.",
     "keywords": [
         "recommendation",
         "recommender",
-        "collaborative filtering"
+        "collaborative filtering",
+        "weighted slope one",
+        "collaborative filtering engine"
     ],
-    "type": "library",
     "license": "MIT",
     "authors": [
         {
-            "name": "Elhaouari Mohammed",
-            "email": "dzstormers@gmail.com"
+            "name": "Mohammed Elhaouari",
+            "email": "phpjuice@gmail.com",
+            "role": "Developer"
         }
     ],
+    "support": {
+        "issues": "https://github.com/phpjuice/opencf/issues",
+        "source": "https://github.com/phpjuice/opencf"
+    },
     "require": {
-        "php": ">=7.2"
+        "php": "^7.4|^8.0|^8.1"
     },
     "require-dev": {
-        "phpunit/phpunit": "5.7",
-        "symfony/var-dumper": "3.4.x-dev",
-        "phpstan/phpstan": "^0.12.28",
-        "squizlabs/php_codesniffer": "*"
+        "squizlabs/php_codesniffer": "^3.4",
+        "phpstan/phpstan": "^0.12",
+        "pestphp/pest": "^1.18"
     },
     "autoload": {
         "psr-4": {
@@ -34,11 +39,12 @@
         }
     },
     "scripts": {
-        "test": "./vendor/bin/phpunit --colors=always --configuration phpunit.xml.dist",
-        "fix-cs": [
-            "php-cs-fixer fix src --rules=@Symfony,@PSR2",
-            "php-cs-fixer fix tests --rules=@Symfony,@PSR2"
-        ],
-        "analyse": "vendor/bin/phpstan analyse src tests"
-    }
+        "test": "vendor/bin/pest --colors=always",
+        "analyse": "phpstan analyse --ansi --debug",
+        "php-cs-fixer": [
+            "php-cs-fixer fix src --rules=@PSR2",
+            "php-cs-fixer fix tests --rules=@PSR2"
+        ]
+    },
+    "minimum-stability": "stable"
 }

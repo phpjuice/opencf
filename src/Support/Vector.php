@@ -2,32 +2,23 @@
 
 namespace OpenCF\Support;
 
+use InvalidArgumentException;
 use OpenCF\Contracts\IVector;
 
 class Vector implements IVector
 {
-    private $meanVector;
-    private $scale;
+    private array $meanVector;
 
-    public function __construct($scale = null, array $meanVector = null)
+    private int $scale;
+
+    public function __construct(int $scale = null, array $meanVector = null)
     {
         $this->scale = ($scale) ?: 2;
         $this->meanVector = ($meanVector) ?: [];
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    public function isSparse(array $xVector, array $yVector)
-    {
-        // check if the 2 vectors has compatible dimensions
-        return  count($xVector) !== count($yVector);
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function dotProduct(array $xVector, array $yVector)
+    /** @inheritdoc */
+    public function dotProduct(array $xVector, array $yVector): float
     {
         // handle Incompatible vectors
         $vectors = $this->intersect($xVector, $yVector);
@@ -36,7 +27,7 @@ class Vector implements IVector
 
         // throw if given vector is a point
         if (1 == count($xVector)) {
-            throw new \InvalidArgumentException('Vectors must have at least 2 points');
+            throw new InvalidArgumentException('Vectors must have at least 2 points');
         }
 
         // initialise the sum variable
@@ -44,10 +35,10 @@ class Vector implements IVector
         foreach ($xVector as $k => $v) {
             // getting the mean value from the mean vector if available
             // else we set the mean value to 0
-            $mean = isset($this->meanVector[$k]) ? $this->meanVector[$k] : 0;
+            $mean = $this->meanVector[$k] ?? 0;
             // rounding the mean with the scale
             $mean = round($mean, $this->getScale());
-            $x = $xVector[$k] - $mean;
+            $x = $v - $mean;
             $y = $yVector[$k] - $mean;
 
             $sum += (float) ($x * $y);
@@ -56,10 +47,8 @@ class Vector implements IVector
         return round($sum, $this->getScale());
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    public function intersect(array $xVector, array $yVector)
+    /** @inheritdoc */
+    public function intersect(array $xVector, array $yVector): array
     {
         $xVector = array_intersect_key($xVector, $yVector);
         $yVector = array_intersect_key($yVector, $xVector);
@@ -67,36 +56,51 @@ class Vector implements IVector
         return [$xVector, $yVector];
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    public function diff(array $xVector, array $yVector)
+    /** @inheritdoc */
+    public function getScale(): int
+    {
+        return $this->scale;
+    }
+
+    /** @inheritdoc */
+    public function setScale(int $scale): self
+    {
+        $this->scale = $scale;
+
+        return $this;
+    }
+
+    /** @inheritdoc */
+    public function diff(array $xVector, array $yVector): float
     {
         // handle Incompatible vectors
         if ($this->isSparse($xVector, $yVector)) {
-            throw new \InvalidArgumentException('Incompatible dimensions for xVector, yVector');
+            throw new InvalidArgumentException('Incompatible dimensions for xVector, yVector');
         }
         // initialise the sum variable
         $sum = 0.0;
         foreach ($xVector as $k => $v) {
-            $sum += (float) ($xVector[$k] - $yVector[$k]);
+            $sum += (float) ($v - $yVector[$k]);
         }
 
         return round($sum, $this->getScale());
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    public function card(array $xVector, array $yVector)
+    /** @inheritdoc */
+    public function isSparse(array $xVector, array $yVector): bool
+    {
+        // check if the 2 vectors has compatible dimensions
+        return count($xVector) !== count($yVector);
+    }
+
+    /** @inheritdoc */
+    public function card(array $xVector, array $yVector): int
     {
         return count(array_intersect_key($xVector, $yVector));
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    public function rmse(array $xVector, array $yVector)
+    /** @inheritdoc */
+    public function rmse(array $xVector, array $yVector): float
     {
         // Intersects Incompatible vectors
         $vectors = $this->intersect($xVector, $yVector);
@@ -111,26 +115,24 @@ class Vector implements IVector
         // initialise the rmse value
         $sum = 0.0;
         foreach ($xVector as $k => $v) {
-            $sum += pow($xVector[$k] - $yVector[$k], 2);
+            $sum += pow($v - $yVector[$k], 2);
         }
 
         return round(sqrt($sum / $card), $this->getScale());
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    public function norm(array $vector)
+    /** @inheritdoc */
+    public function norm(array $vector): float
     {
         $sum = 0.0;
         foreach ($vector as $k => $v) {
             // getting the mean value from the mean vector
-            $mean = isset($this->meanVector[$k]) ? $this->meanVector[$k] : 0;
+            $mean = $this->meanVector[$k] ?? 0;
             /**
              * @see https://stackoverflow.com/questions/17210787/php-float-calculation-error-when-subtracting
              */
             $mean = round($mean, $this->getScale());
-            $x = $vector[$k] - $mean;
+            $x = $v - $mean;
 
             $sum += (float) ($x * $x);
         }
@@ -138,18 +140,8 @@ class Vector implements IVector
         return round(sqrt($sum), $this->getScale());
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    public function sum(array $vector)
-    {
-        return round(array_sum($vector), $this->getScale());
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function average(array $vector)
+    /** @inheritdoc */
+    public function average(array $vector): float
     {
         $vector = array_filter($vector);
         if (0 == count($vector)) {
@@ -160,30 +152,21 @@ class Vector implements IVector
         return round($avg, $this->getScale());
     }
 
-    public function setScale($scale)
+    /** @inheritdoc */
+    public function sum(array $vector): float
     {
-        if (!is_int($scale)) {
-            throw new \InvalidArgumentException('Scale must be an integer');
-        }
-        $this->scale = $scale;
-
-        return $this;
+        return round(array_sum($vector), $this->getScale());
     }
 
-    public function getScale()
+    public function getMeanVector(): array
     {
-        return $this->scale;
+        return $this->meanVector;
     }
 
-    public function setMeanVector(array $meanVector)
+    public function setMeanVector(array $meanVector): self
     {
         $this->meanVector = $meanVector;
 
         return $this;
-    }
-
-    public function getMeanVector()
-    {
-        return $this->meanVector;
     }
 }

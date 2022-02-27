@@ -2,15 +2,16 @@
 
 namespace OpenCF\Algorithms\Slopeone;
 
+use InvalidArgumentException;
 use OpenCF\Contracts\ISimilarity;
 use OpenCF\Contracts\IVector;
 
 class Similarity implements ISimilarity
 {
-    protected $vector;
+    protected IVector $vector;
 
     /**
-     * @param IVector $vector service provier
+     * @param  IVector  $vector  service provider
      */
     public function __construct(IVector $vector)
     {
@@ -20,11 +21,11 @@ class Similarity implements ISimilarity
     /**
      * calculate the deviation between 2 items.
      *
-     * @throws \InvalidArgumentException
-     *
-     * @return float deviation value
+     * @param  array  $xVector
+     * @param  array  $yVector
+     * @return float
      */
-    public function getSimilarity(array $xVector, array $yVector)
+    public function getSimilarity(array $xVector, array $yVector): float
     {
         // get the cardinal intersecting the 2 vectors
         $card = $this->vector->card(
@@ -34,7 +35,7 @@ class Similarity implements ISimilarity
 
         // handle Exceptions
         if (0 == $card) {
-            throw new \InvalidArgumentException('Empty Vectors are not accepted as parameters');
+            throw new InvalidArgumentException('Empty Vectors are not accepted as parameters');
         }
 
         // get the diff value between the 2 vectors

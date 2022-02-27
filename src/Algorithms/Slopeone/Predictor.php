@@ -6,10 +6,7 @@ use OpenCF\Algorithms\Predictor as AbstractPredictor;
 
 class Predictor extends AbstractPredictor
 {
-    /**
-     * {@inheritdoc}
-     */
-    public function getPrediction(array $evaluation, $target)
+    public function getPrediction(array $evaluation, string $target): float
     {
         // intersect rated elements by the user
         // with dev vector of the target element
@@ -29,7 +26,7 @@ class Predictor extends AbstractPredictor
             // we get the cardinal of the intersection
             // between each rated item with the target
             // item Cji => card(Sji(x))
-            // where J is Fixed and i is the iterator
+            // where "J" is Fixed and "I" is the iterator
             $card = $this->vector->card($targetVector, $currentVector);
 
             // we get the user rating value and add it to
