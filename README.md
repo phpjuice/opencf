@@ -5,13 +5,13 @@
 [![Total Downloads](http://poser.pugx.org/phpjuice/opencf/downloads)](https://packagist.org/packages/phpjuice/opencf)
 [![License](http://poser.pugx.org/phpjuice/opencf/license)](https://packagist.org/packages/phpjuice/opencf)
 
-PHP implementation of the Weighted Slope One rating-based collaborative filtering scheme.
+PHP implementation of the (Weighted Slopeone,Cosine, Weighted Cosine) rating-based collaborative filtering schemes.
 
 ## Installation
 
 OpenCF Package requires `PHP 7.4` or higher.
 
-> **INFO:** If you are using an older version of php this package may not function correctly.
+> **INFO:** If you are using an older version of php this package will not function correctly.
 
 The supported way of installing `OpenCF` package is via Composer.
 
@@ -24,24 +24,53 @@ composer require phpjuice/opencf
 OpenCF Package is designed to be very simple and straightforward to use. All you have to do is to load rating data, then
 predict future ratings based on the training set provided.
 
-### Loading files
+### Create Recommender Service
 
-The `OpenCF` object is created by direct instantiation:
+The `OpenCF` recommender service is created by direct instantiation:
 
 ```php
-use PHPJuice\OpenCF\Algorithm;
+use OpenCF\RecommenderService;
 
 // Create an instance
-$opencf = new Algorithm();
+$recommenderService = new RecommenderService($dataset);
 ```
 
-### Adding Rating values
+### Registering a recommendation engine
 
-Adding Rating values can be easily done by providing an array of users ratings via the update() method:
+The recommender service support's 3 recommendation engines (Weighted Slopeone,Cosine, Weighted Cosine).
+
+#### Cosine
+
+```php
+// Register a `Cosine` recommendation engine
+$recommenderService->registerRecommender('Cosine');
+$recommenderService->getRecommender('Cosine'); // OpenCF\Algorithms\Similarity\Cosine::class
+```
+
+#### Weighted Cosine
+
+```php
+// Register a `Weighted Cosine` recommendation engine
+$recommenderService->registerRecommender('WeightedCosine');
+$recommenderService->getRecommender('WeightedCosine'); // OpenCF\Algorithms\Similarity\WeightedCosine::class
+```
+
+#### Weighted Slopeone
+
+```php
+// Register a `Weighted Slopeone` recommendation engine
+$recommenderService->registerRecommender('WeightedSlopeone');
+$recommenderService->getRecommender('WeightedSlopeone'); // OpenCF\Algorithms\Slopeone\WeightedSlopeone::class
+```
+
+### Adding dataset
+
+Adding a dataset to the recommender can be done using the constructor or can be easily done by providing an array of
+users ratings via the `setDataset()` method:
 
 ```php
 
-$data =[
+$dataset =[
   [
     "squid" => 1,
     "cuttlefish" => 0.5,
@@ -65,20 +94,28 @@ $data =[
   ]
 ];
 
-$opencf->update($data);
+$recommenderService->setDataset($dataset);
 ```
 
-### Predicting ratings
+### Getting Predictions
 
-all you have to do to predict ratings for a new user is to run the opencf::predict method
+All you have to do to predict ratings for a new user is to retrieve an engine from the recommender service and
+run `predict()` method.
 
 ```php
-$results = $opencf->predict([
+// Get engine
+$weightedSlopeone = $recommenderService->getRecommender('WeightedSlopeone');
+
+// Build model
+$weightedSlopeone->buildModel();
+
+// Get predictions
+$results = $weightedSlopeone->predict([
     "squid" => 0.4
 ]);
 ```
 
-this should produce the following results
+This should produce the following results
 
 ```php
 [
