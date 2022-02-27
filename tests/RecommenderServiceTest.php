@@ -7,54 +7,67 @@ use OpenCF\Exceptions\EmptyDatasetException;
 use OpenCF\Exceptions\NotRegisteredRecommenderException;
 use OpenCF\RecommenderService;
 
-test('constructor with empty dataset', function () {
-    $this->expectException(EmptyDatasetException::class);
+it('does not initialize with an empty dataset', function () {
     new RecommenderService([]);
-});
+})->throws(EmptyDatasetException::class);
 
-test('register not supported recommender', function () {
-    $this->expectException(NotRegisteredRecommenderException::class);
+it('does not register an unsupported recommender', function () {
     $dataset = [
         'item1' => ['rating1' => 4],
     ];
     $recommenderService = new RecommenderService($dataset);
     $recommenderService->getRecommender('Cosine');
-});
+})->throws(NotRegisteredRecommenderException::class);
 
-test('register supported recommender', function () {
+it('registers a supported recommender', function () {
     $dataset = [
         'item1' => ['rating1' => 4],
     ];
     $recommenderService = new RecommenderService($dataset);
 
     // instance of cosine
-    $recommenderService->registerRecommender('Cosine');
-    expect($recommenderService->getRecommender('Cosine'))->toBeInstanceOf(Cosine::class);
+    $recommenderService->registerRecommender(Cosine::class);
+    expect($recommenderService->getRecommender(Cosine::class))->toBeInstanceOf(Cosine::class);
 
     // instance of weighted cosine
-    $recommenderService->registerRecommender('WeightedCosine');
-    expect($recommenderService->getRecommender('WeightedCosine'))->toBeInstanceOf(WeightedCosine::class);
+    $recommenderService->registerRecommender(WeightedCosine::class);
+    expect($recommenderService->getRecommender(WeightedCosine::class))->toBeInstanceOf(WeightedCosine::class);
 
     // instance of weighted cosine
-    $recommenderService->registerRecommender('WeightedSlopeone');
-    expect($recommenderService->getRecommender('WeightedSlopeone'))->toBeInstanceOf(WeightedSlopeone::class);
+    $recommenderService->registerRecommender(WeightedSlopeone::class);
+    expect($recommenderService->getRecommender(WeightedSlopeone::class))->toBeInstanceOf(WeightedSlopeone::class);
 });
 
-test('get recommender', function () {
-    $this->expectException(NotRegisteredRecommenderException::class);
+it('throws an exception when retrieving an invalid recommender', function () {
     $dataset = [
         'item1' => ['rating1' => 4],
     ];
     $recommenderService = new RecommenderService($dataset);
-    $recommenderService->getRecommender('Cosine');
-});
+    $recommenderService->getRecommender('Invalid');
+})->throws(NotRegisteredRecommenderException::class);
 
-test('get registered recommender', function () {
+it('retrieves a registered recommender', function () {
     $dataset = [
         'item1' => ['rating1' => 4],
     ];
     $recommenderService = new RecommenderService($dataset);
-    $recommenderService->registerRecommender('Cosine');
-    $instance = $recommenderService->getRecommender('Cosine');
+    $recommenderService->registerRecommender(Cosine::class);
+    $instance = $recommenderService->getRecommender(Cosine::class);
     expect($instance)->toBeInstanceOf(Cosine::class);
+});
+
+it('retrieves a registers all default recommenders', function () {
+    $dataset = [
+        'item1' => ['rating1' => 4],
+    ];
+    $recommenderService = new RecommenderService($dataset);
+
+    $instance = $recommenderService->getRecommender(Cosine::class);
+    expect($instance)->toBeInstanceOf(Cosine::class);
+
+    $instance = $recommenderService->getRecommender(WeightedCosine::class);
+    expect($instance)->toBeInstanceOf(WeightedCosine::class);
+
+    $instance = $recommenderService->getRecommender(WeightedSlopeone::class);
+    expect($instance)->toBeInstanceOf(WeightedSlopeone::class);
 });

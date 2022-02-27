@@ -39,34 +39,6 @@ use OpenCF\RecommenderService;
 $recommenderService = new RecommenderService($dataset);
 ```
 
-### Registering a recommendation engine
-
-The recommender service support's 3 recommendation engines (Weighted Slopeone,Cosine, Weighted Cosine).
-
-#### Cosine
-
-```php
-// Register a `Cosine` recommendation engine
-$recommenderService->registerRecommender('Cosine');
-$recommenderService->getRecommender('Cosine'); // OpenCF\Algorithms\Similarity\Cosine::class
-```
-
-#### Weighted Cosine
-
-```php
-// Register a `Weighted Cosine` recommendation engine
-$recommenderService->registerRecommender('WeightedCosine');
-$recommenderService->getRecommender('WeightedCosine'); // OpenCF\Algorithms\Similarity\WeightedCosine::class
-```
-
-#### Weighted Slopeone
-
-```php
-// Register a `Weighted Slopeone` recommendation engine
-$recommenderService->registerRecommender('WeightedSlopeone');
-$recommenderService->getRecommender('WeightedSlopeone'); // OpenCF\Algorithms\Slopeone\WeightedSlopeone::class
-```
-
 ### Adding dataset
 
 Adding a dataset to the recommender can be done using the constructor or can be easily done by providing an array of
@@ -103,18 +75,19 @@ $recommenderService->setDataset($dataset);
 
 ### Getting Predictions
 
-All you have to do to predict ratings for a new user is to retrieve an engine from the recommender service and
-, build the model & run the `predict()` method.
+All you have to do to predict ratings for a new user is to retrieve an engine from the recommender service and & run
+the `predict()` method.
 
 ```php
-// Get engine
-$weightedSlopeone = $recommenderService->getRecommender('WeightedSlopeone');
+// Get a recommender
+$recommender = $recommenderService->cosine(); // Cosine recommender
+// OR
+$recommender = $recommenderService->weightedCosine(); // WeightedCosine recommender
+// OR
+$recommender = $recommenderService->weightedSlopeone(); // WeightedSlopeone recommender
 
-// Build model
-$weightedSlopeone->buildModel();
-
-// Get predictions
-$results = $weightedSlopeone->predict([
+// Predict future ratings
+$results = $recommender->predict([
     "squid" => 0.4
 ]);
 ```

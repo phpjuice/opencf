@@ -14,9 +14,7 @@ class WeightedSlopeone extends Recommender
         return 'WeightedSlopeone';
     }
 
-    /**
-     * @inheritdoc
-     */
+    /** @inheritdoc */
     public function buildModel(): self
     {
         $this->similarityFunction = new Similarity($this->vector);
