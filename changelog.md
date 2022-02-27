@@ -7,11 +7,19 @@ All notable changes to `phpjuice/opencf` will be documented in this file.
 ### Added
 
 - Added php types
-- Added pest for testing
+- Added getting started docs
+- Resolve some static errors
 
 ### Changed
 
 - Drop support for `< php7.4`
+- Replaced phpunit with pest for testing
+
+## Version 1.0.1
+
+### Changed
+
+- Change PHP requirement to >=7.2
 
 ## Version 1.0.0
 
