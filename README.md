@@ -23,10 +23,8 @@ composer require phpjuice/opencf
 
 OpenCF Package is designed to be very simple and straightforward to use. All you have to do is:
 
-1. Load training set
-2. Select recommendation engine
-3. Build a model
-4. Predict future ratings based on the training set provided
+1. Load a training set (dataset)
+3. Predict future ratings using a recommender. (Weighted Slopeone,Cosine, Weighted Cosine)
 
 ### Create Recommender Service
 
@@ -37,34 +35,6 @@ use OpenCF\RecommenderService;
 
 // Create an instance
 $recommenderService = new RecommenderService($dataset);
-```
-
-### Registering a recommendation engine
-
-The recommender service support's 3 recommendation engines (Weighted Slopeone,Cosine, Weighted Cosine).
-
-#### Cosine
-
-```php
-// Register a `Cosine` recommendation engine
-$recommenderService->registerRecommender('Cosine');
-$recommenderService->getRecommender('Cosine'); // OpenCF\Algorithms\Similarity\Cosine::class
-```
-
-#### Weighted Cosine
-
-```php
-// Register a `Weighted Cosine` recommendation engine
-$recommenderService->registerRecommender('WeightedCosine');
-$recommenderService->getRecommender('WeightedCosine'); // OpenCF\Algorithms\Similarity\WeightedCosine::class
-```
-
-#### Weighted Slopeone
-
-```php
-// Register a `Weighted Slopeone` recommendation engine
-$recommenderService->registerRecommender('WeightedSlopeone');
-$recommenderService->getRecommender('WeightedSlopeone'); // OpenCF\Algorithms\Slopeone\WeightedSlopeone::class
 ```
 
 ### Adding dataset
@@ -103,29 +73,30 @@ $recommenderService->setDataset($dataset);
 
 ### Getting Predictions
 
-All you have to do to predict ratings for a new user is to retrieve an engine from the recommender service and
-, build the model & run the `predict()` method.
+All you have to do to predict ratings for a new user is to retrieve an engine from the recommender service and & run
+the `predict()` method.
 
 ```php
-// Get engine
-$weightedSlopeone = $recommenderService->getRecommender('WeightedSlopeone');
+// Get a recommender
+$recommender = $recommenderService->cosine(); // Cosine recommender
+// OR
+$recommender = $recommenderService->weightedCosine(); // WeightedCosine recommender
+// OR
+$recommender = $recommenderService->weightedSlopeone(); // WeightedSlopeone recommender
 
-// Build model
-$weightedSlopeone->buildModel();
-
-// Get predictions
-$results = $weightedSlopeone->predict([
+// Predict future ratings
+$results = $recommender->predict([
     "squid" => 0.4
 ]);
 ```
 
-This should produce the following results
+This should produce the following results when using `WeightedSlopeone` recommender
 
 ```php
 [
-  "cuttlefish"=>0.25,
-  "octopus"=>0.23333333333333,
-  "nautilus"=>0.1
+  "cuttlefish" => 0.25,
+  "octopus" => 0.23333333333333,
+  "nautilus" => 0.1
 ];
 ```
 

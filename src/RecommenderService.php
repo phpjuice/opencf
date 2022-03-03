@@ -10,23 +10,27 @@ use OpenCF\Contracts\IRecommenderService;
 use OpenCF\Exceptions\EmptyDatasetException;
 use OpenCF\Exceptions\NotRegisteredRecommenderException;
 use OpenCF\Exceptions\NotSupportedSchemeException;
+use ReflectionClass;
+use ReflectionException;
 
 class RecommenderService implements IRecommenderService
 {
     /**
-     * @var IRecommender[]
+     * list of registered engines.
+     *
+     * @var array<IRecommender>
      */
-    private array $engines = [];
+    private array $recommenders = [];
 
     /**
      * list of the supported Engines.
      *
-     * @var array
+     * @var array<string>
      */
-    private array $supportedEngines = [
-        'Cosine',
-        'WeightedCosine',
-        'WeightedSlopeone',
+    private array $defaultRecommenders = [
+        Cosine::class,
+        WeightedCosine::class,
+        WeightedSlopeone::class,
     ];
 
     /**
@@ -42,6 +46,11 @@ class RecommenderService implements IRecommenderService
     public function __construct(array $dataset)
     {
         $this->setDataset($dataset);
+
+        // register default recommenders
+        foreach ($this->defaultRecommenders as $recommender) {
+            $this->recommenders[$recommender] = new $recommender($this->dataset);
+        }
     }
 
     /**
@@ -62,35 +71,61 @@ class RecommenderService implements IRecommenderService
         return $this;
     }
 
-    public function getRecommender(string $name): IRecommender
+    public function weightedSlopeone(): IRecommender
     {
-        if (! array_key_exists($name, $this->engines)) {
-            throw new NotRegisteredRecommenderException(sprintf('The Recommendation engine "%s" is not registered in the Recommender Service',
-                $name));
+        if (!in_array(WeightedSlopeone::class, $this->recommenders)) {
+            $this->registerRecommender(WeightedSlopeone::class);
         }
 
-        return $this->engines[$name];
+        return $this->getRecommender(WeightedSlopeone::class);
     }
 
-    public function registerRecommender(string $name): self
+    public function registerRecommender(string $recommender): self
     {
-        if (! in_array($name, $this->supportedEngines)) {
-            throw new NotSupportedSchemeException(sprintf('The Recommendation engine "%s" is not supported yet',
-                $name));
+        try {
+            $rf = new ReflectionClass($recommender);
+        } catch (ReflectionException $e) {
+            throw new NotSupportedSchemeException(sprintf('Recommendation engine "%s" must implement "%s" interface',
+                $recommender, IRecommender::class));
         }
-        switch ($name) {
-            case 'WeightedCosine':
-                $recommendationEngine = new WeightedCosine($this->dataset);
-                break;
-            case 'WeightedSlopeone':
-                $recommendationEngine = new WeightedSlopeone($this->dataset);
-                break;
-            default:
-                $recommendationEngine = new Cosine($this->dataset);
-                break;
+
+        if (!$rf->implementsInterface(IRecommender::class)) {
+            throw new NotSupportedSchemeException(sprintf('Recommendation engine "%s" must implement "%s" interface',
+                $recommender, IRecommender::class));
         }
-        $this->engines[$recommendationEngine->name()] = $recommendationEngine;
+
+        if (!in_array($recommender, $this->recommenders)) {
+            $this->recommenders[$recommender] = new $recommender($this->dataset);
+        }
 
         return $this;
+    }
+
+    public function getRecommender(string $recommender): IRecommender
+    {
+        if (!array_key_exists($recommender, $this->recommenders)) {
+            throw new NotRegisteredRecommenderException(sprintf('The Recommendation engine "%s" is not registered in the Recommender Service',
+                $recommender));
+        }
+
+        return $this->recommenders[$recommender]->buildModel();
+    }
+
+    public function weightedCosine(): IRecommender
+    {
+        if (!in_array(WeightedCosine::class, $this->recommenders)) {
+            $this->registerRecommender(WeightedCosine::class);
+        }
+
+        return $this->getRecommender(WeightedCosine::class);
+    }
+
+    public function cosine(): IRecommender
+    {
+        if (!in_array(Cosine::class, $this->recommenders)) {
+            $this->registerRecommender(Cosine::class);
+        }
+
+        return $this->getRecommender(Cosine::class);
     }
 }

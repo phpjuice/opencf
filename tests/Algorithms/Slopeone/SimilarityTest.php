@@ -2,7 +2,8 @@
 
 use OpenCF\Algorithms\Slopeone\Similarity;
 use OpenCF\Support\Vector;
-test('get deviation method', function () {
+
+test('calculates similarity between items with deviation', function () {
     $vector = new Vector();
     $algorithm = new Similarity($vector);
     $xVector = [
@@ -20,6 +21,6 @@ test('get deviation method', function () {
     $results = $algorithm->getSimilarity($xVector, $xVector);
     expect($results)->toEqual(0);
 
-    $this->expectException(\InvalidArgumentException::class);
+    $this->expectException(InvalidArgumentException::class);
     $algorithm->getSimilarity([], []);
 });

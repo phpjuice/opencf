@@ -1,6 +1,6 @@
 {
     "name": "phpjuice/opencf",
-    "description": "OpenCF - an Item-based Collaborative Filtering Engine.",
+    "description": "PHP implementation of the (Weighted Slopeone,Cosine, Weighted Cosine) rating-based collaborative filtering schemes.",
     "keywords": [
         "recommendation",
         "recommender",
@@ -40,7 +40,7 @@
     },
     "scripts": {
         "test": "vendor/bin/pest --colors=always",
-        "analyse": "phpstan analyse --ansi --debug",
+        "analyse": "vendor/bin/phpstan analyse --ansi --debug",
         "php-cs-fixer": [
             "php-cs-fixer fix src --rules=@PSR2",
             "php-cs-fixer fix tests --rules=@PSR2"

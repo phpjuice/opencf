@@ -3,6 +3,7 @@
 use OpenCF\Algorithms\Similarity\Cosine;
 use OpenCF\Algorithms\Similarity\Predictor;
 use OpenCF\Support\Vector;
+
 beforeEach(function () {
     $this->dataset = [
         'Item1' => [
@@ -29,7 +30,7 @@ beforeEach(function () {
     ];
 });
 
-test('get prediction with cosine', function () {
+it('returns correct prediction for a single item', function () {
     $cosine = new Cosine($this->dataset);
     $cosine->buildModel();
     $pred = new Predictor($this->dataset, $cosine->getModel(), new Vector());

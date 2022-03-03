@@ -68,7 +68,7 @@ beforeEach(function () {
     // $this->dataset
 });
 
-test('slopeone scheme predict method', function () {
+it('returns correct predictions', function () {
     $scheme = new WeightedCosine($this->dataset);
     $scheme->buildModel();
 
@@ -186,7 +186,7 @@ test('slopeone scheme predict method', function () {
 /**
  * @throws ReflectionException
  */
-test('transpose matrix', function () {
+it('transposes the ratings matrix', function () {
     $matrix = [
         'Item1' => [
             'Rating1' => 1,

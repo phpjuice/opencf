@@ -1,18 +1,19 @@
 <?php
 
 use OpenCF\Support\Vector;
+
 beforeEach(function () {
     // construct a vector
     $this->vector = new Vector();
 });
 
-test('set scale method', function () {
+it('sets the scale correctly', function () {
     expect($this->vector->getScale())->toEqual(2);
     $this->vector->setScale(3);
     expect($this->vector->getScale())->toEqual(3);
 });
 
-test('constructor method', function () {
+it('can initialize a new vector', function () {
     $vector = new Vector(3);
     expect($vector->getScale())->toEqual(3);
     expect($vector->getMeanVector())->toEqual([]);
@@ -22,7 +23,7 @@ test('constructor method', function () {
     expect($vector->getMeanVector())->toEqual([1, 3, 3]);
 });
 
-test('is sparse method', function () {
+it('checks if vector is sparse', function () {
     $xVector = [
         'item1' => 2,
         'item2' => 2,
@@ -36,7 +37,7 @@ test('is sparse method', function () {
     expect($this->vector->isSparse($xVector, $xVector))->toBeFalse();
 });
 
-test('intersect method', function () {
+it('intersects a vector with another vector', function () {
     $expected = [
         [
             'item1' => 2,
@@ -61,7 +62,7 @@ test('intersect method', function () {
     expect($results)->toEqual($expected);
 });
 
-test('dot product with compatible vectors', function () {
+it('calculates the dot product with a compatible vector', function () {
     $xVector = [
         'item1' => 5,
         'item2' => 4,
@@ -82,7 +83,7 @@ test('dot product with compatible vectors', function () {
     expect($this->vector->dotProduct([], []))->toEqual(0);
 });
 
-test('dot product with mean vector', function () {
+it('calculates the dot product with a mean vector', function () {
     $xVector = [
         'item1' => 1,
         'item2' => 0.2,
@@ -103,7 +104,7 @@ test('dot product with mean vector', function () {
     expect($results)->toEqual(-0.00);
 });
 
-test('norm method', function () {
+it('calculates a norm of a vector', function () {
     $vector = [
         'item1' => 2,
         'item2' => 2,
@@ -112,7 +113,7 @@ test('norm method', function () {
     expect($results)->toEqual(2.83);
 });
 
-test('norm method with mean', function () {
+it('calculates a norm of a vector with mean', function () {
     $vector = [
         'item1' => 1,
         'item2' => 0.2,
@@ -127,7 +128,7 @@ test('norm method with mean', function () {
     expect($this->vector->norm($vector))->toEqual(0.52);
 });
 
-test('sum method', function () {
+it('calculates the sum of a vector with anther', function () {
     $vector = [
         'item1' => 2,
         'item2' => 2,
@@ -142,7 +143,7 @@ test('sum method', function () {
     expect($this->vector->sum($vector))->toEqual(2);
 });
 
-test('average method', function () {
+it('calculates the average of a vector with anther', function () {
     $vector = [
         'item1' => 2,
         'item2' => 2,
@@ -157,7 +158,7 @@ test('average method', function () {
     expect($this->vector->average($vector))->toEqual(1);
 });
 
-test('diff method', function () {
+it('calculates the diff between two vectors', function () {
     $x = [
         'item1' => 1,
         'item2' => 1,
@@ -184,7 +185,7 @@ test('diff method', function () {
     expect($this->vector->diff($x, $y))->toEqual(0.01);
 });
 
-test('card method', function () {
+it('calculates the cardinal of a vector', function () {
     $x = [
         'item1' => 0.5,
         'item2' => 1.4,
@@ -200,7 +201,7 @@ test('card method', function () {
     expect($this->vector->card($x, $y))->toEqual(2);
 });
 
-test('rmse method', function () {
+it('calculates the rmse of a vector', function () {
     $x = [
         'item1' => 3,
         'item2' => 2,

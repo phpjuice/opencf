@@ -1,14 +1,32 @@
-includes:
-    # -
-
 parameters:
+
     level: max
+
     paths:
         - src
         - tests
 
+    scanFiles:
+
+        # Pest handles loading custom helpers only when running tests
+        # @see https://pestphp.com/docs/helpers#usage
+        - tests/Pest.php
+
     checkMissingIterableValueType: false
-    checkGenericClassInNonGenericObjectType: false
     reportUnmatchedIgnoredErrors: true
 
     ignoreErrors:
+
+        # Pest implicitly binds $this to the current test case
+        # @see https://pestphp.com/docs/underlying-test-case
+        -
+            message: '#^Undefined variable: \$this$#'
+            paths:
+                - tests/*
+
+        # Pest custom expectations are dynamic and not conducive static analysis
+        # @see https://pestphp.com/docs/expectations#custom-expectations
+        -
+            message: '#Call to an undefined method Pest\\Expectation|Pest\\Support\\Extendable::#'
+            paths:
+                - tests/*

@@ -1,6 +1,7 @@
 <?php
 
 use OpenCF\Algorithms\Slopeone\WeightedSlopeone;
+
 beforeEach(function () {
     $this->dataset = [
         'Batman V Superman' => [
@@ -67,7 +68,7 @@ beforeEach(function () {
     // $this->dataset
 });
 
-test('slopeone scheme predict method', function () {
+it('returns correct predictions', function () {
     $scheme = new WeightedSlopeone($this->dataset);
     $scheme->buildModel();
 
