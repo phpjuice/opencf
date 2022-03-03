@@ -3,6 +3,7 @@
 use OpenCF\Algorithms\Slopeone\Predictor;
 use OpenCF\Algorithms\Slopeone\WeightedSlopeone;
 use OpenCF\Support\Vector;
+
 beforeEach(function () {
     $this->dataset = [
         'Item1' => [
@@ -29,7 +30,7 @@ beforeEach(function () {
     ];
 });
 
-test('get prediction with slopeone', function () {
+it('returns correct predictions', function () {
     $scheme = new WeightedSlopeone($this->dataset);
     $scheme->buildModel();
     $pred = new Predictor($this->dataset, $scheme->getModel(), new Vector());

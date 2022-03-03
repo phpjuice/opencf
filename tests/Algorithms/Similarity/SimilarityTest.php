@@ -3,7 +3,7 @@
 use OpenCF\Algorithms\Similarity\Similarity;
 use OpenCF\Support\Vector;
 
-test('get similarity', function () {
+it('calculates similarity between items', function () {
     $vector = new Vector();
     $algorithm = new Similarity($vector);
     $xVector = [
@@ -26,7 +26,7 @@ test('get similarity', function () {
     $this->assertNotEquals(1, $results);
 });
 
-test('get similarity with mean', function () {
+it('calculates similarity between items with mean', function () {
     $vector = new Vector();
     $vector->setMeanVector([
         'item1' => 0.57,

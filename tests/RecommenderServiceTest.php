@@ -3,6 +3,7 @@
 use OpenCF\Algorithms\Similarity\Cosine;
 use OpenCF\Algorithms\Similarity\WeightedCosine;
 use OpenCF\Algorithms\Slopeone\WeightedSlopeone;
+use OpenCF\Contracts\IRecommender;
 use OpenCF\Exceptions\EmptyDatasetException;
 use OpenCF\Exceptions\NotRegisteredRecommenderException;
 use OpenCF\RecommenderService;
@@ -26,8 +27,28 @@ it('registers a supported recommender', function () {
     $recommenderService = new RecommenderService($dataset);
 
     // instance of cosine
-    $recommenderService->registerRecommender(Cosine::class);
-    expect($recommenderService->getRecommender(Cosine::class))->toBeInstanceOf(Cosine::class);
+    $class = new class() implements IRecommender {
+        public function name(): string
+        {
+            return 'Test Recommender';
+        }
+
+        public function getModel(): array
+        {
+            return [];
+        }
+
+        public function buildModel(): IRecommender
+        {
+            return $this;
+        }
+
+        public function predict(array $userRatings): array
+        {
+            return [];
+        }
+    };
+    $recommenderService->registerRecommender(get_class($class));
 
     // instance of weighted cosine
     $recommenderService->registerRecommender(WeightedCosine::class);
