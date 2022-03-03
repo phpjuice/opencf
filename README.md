@@ -23,10 +23,8 @@ composer require phpjuice/opencf
 
 OpenCF Package is designed to be very simple and straightforward to use. All you have to do is:
 
-1. Load training set
-2. Select recommendation engine
-3. Build a model
-4. Predict future ratings based on the training set provided
+1. Load a training set (dataset)
+3. Predict future ratings using a recommender. (Weighted Slopeone,Cosine, Weighted Cosine)
 
 ### Create Recommender Service
 
@@ -92,13 +90,13 @@ $results = $recommender->predict([
 ]);
 ```
 
-This should produce the following results
+This should produce the following results when using `WeightedSlopeone` recommender
 
 ```php
 [
-  "cuttlefish"=>0.25,
-  "octopus"=>0.23333333333333,
-  "nautilus"=>0.1
+  "cuttlefish" => 0.25,
+  "octopus" => 0.23333333333333,
+  "nautilus" => 0.1
 ];
 ```
 

@@ -1,6 +1,6 @@
 {
     "name": "phpjuice/opencf",
-    "description": "OpenCF - an Item-based Collaborative Filtering Engine.",
+    "description": "PHP implementation of the (Weighted Slopeone,Cosine, Weighted Cosine) rating-based collaborative filtering schemes.",
     "keywords": [
         "recommendation",
         "recommender",

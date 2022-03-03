@@ -10,6 +10,8 @@ use OpenCF\Contracts\IRecommenderService;
 use OpenCF\Exceptions\EmptyDatasetException;
 use OpenCF\Exceptions\NotRegisteredRecommenderException;
 use OpenCF\Exceptions\NotSupportedSchemeException;
+use ReflectionClass;
+use ReflectionException;
 
 class RecommenderService implements IRecommenderService
 {
@@ -25,7 +27,7 @@ class RecommenderService implements IRecommenderService
      *
      * @var array<string>
      */
-    private array $supportedRecommenders = [
+    private array $defaultRecommenders = [
         Cosine::class,
         WeightedCosine::class,
         WeightedSlopeone::class,
@@ -46,7 +48,7 @@ class RecommenderService implements IRecommenderService
         $this->setDataset($dataset);
 
         // register default recommenders
-        foreach ($this->supportedRecommenders as $recommender) {
+        foreach ($this->defaultRecommenders as $recommender) {
             $this->recommenders[$recommender] = new $recommender($this->dataset);
         }
     }
@@ -69,11 +71,27 @@ class RecommenderService implements IRecommenderService
         return $this;
     }
 
+    public function weightedSlopeone(): IRecommender
+    {
+        if (!in_array(WeightedSlopeone::class, $this->recommenders)) {
+            $this->registerRecommender(WeightedSlopeone::class);
+        }
+
+        return $this->getRecommender(WeightedSlopeone::class);
+    }
+
     public function registerRecommender(string $recommender): self
     {
-        if (!in_array($recommender, $this->supportedRecommenders)) {
-            throw new NotSupportedSchemeException(sprintf('The Recommendation engine "%s" is not supported yet',
-                $recommender));
+        try {
+            $rf = new ReflectionClass($recommender);
+        } catch (ReflectionException $e) {
+            throw new NotSupportedSchemeException(sprintf('Recommendation engine "%s" must implement "%s" interface',
+                $recommender, IRecommender::class));
+        }
+
+        if (!$rf->implementsInterface(IRecommender::class)) {
+            throw new NotSupportedSchemeException(sprintf('Recommendation engine "%s" must implement "%s" interface',
+                $recommender, IRecommender::class));
         }
 
         if (!in_array($recommender, $this->recommenders)) {
@@ -91,15 +109,6 @@ class RecommenderService implements IRecommenderService
         }
 
         return $this->recommenders[$recommender]->buildModel();
-    }
-
-    public function weightedSlopeone(): IRecommender
-    {
-        if (!in_array(WeightedSlopeone::class, $this->recommenders)) {
-            $this->registerRecommender(WeightedSlopeone::class);
-        }
-
-        return $this->getRecommender(WeightedSlopeone::class);
     }
 
     public function weightedCosine(): IRecommender
