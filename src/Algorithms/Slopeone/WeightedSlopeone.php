@@ -6,9 +6,7 @@ use OpenCF\Algorithms\Recommender;
 
 class WeightedSlopeone extends Recommender
 {
-    /**
-     * @inheritdoc
-     */
+    /** @inheritdoc */
     public function name(): string
     {
         return 'WeightedSlopeone';

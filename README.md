@@ -43,29 +43,28 @@ Adding a dataset to the recommender can be done using the constructor or can be 
 users ratings via the `setDataset()` method:
 
 ```php
-
-$dataset =[
-  [
-    "squid" => 1,
-    "cuttlefish" => 0.5,
-    "octopus" => 0.2
-  ],
-  [
-    "squid" => 1,
-    "octopus" => 0.5,
-    "nautilus" => 0.2
-  ],
-  [
-    "squid" => 0.2,
-    "octopus" => 1,
-    "cuttlefish" => 0.4,
-    "nautilus" => 0.4
-  ],
-  [
-    "cuttlefish" => 0.9,
-    "octopus" => 0.4,
-    "nautilus" => 0.5
-  ]
+$dataset = [
+    "squid" => [
+        "user1" => 1,
+        "user2" => 1,
+        "user3" => 0.2,
+    ],
+    "cuttlefish" => [
+        "user1" => 0.5,
+        "user3" => 0.4,
+        "user4" => 0.9,
+    ],
+    "octopus" => [
+        "user1" => 0.2,
+        "user2" => 0.5,
+        "user3" => 1,
+        "user4" => 0.4,
+    ],
+    "nautilus" => [
+        "user2" => 0.2,
+        "user3" => 0.4,
+        "user4" => 0.5,
+    ],
 ];
 
 $recommenderService->setDataset($dataset);
@@ -95,7 +94,7 @@ This should produce the following results when using `WeightedSlopeone` recommen
 ```php
 [
   "cuttlefish" => 0.25,
-  "octopus" => 0.23333333333333,
+  "octopus" => 0.23,
   "nautilus" => 0.1
 ];
 ```

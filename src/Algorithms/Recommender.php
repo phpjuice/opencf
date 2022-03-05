@@ -8,41 +8,29 @@ use OpenCF\Contracts\IPredictor;
 use OpenCF\Contracts\IRecommender;
 use OpenCF\Contracts\ISimilarity;
 use OpenCF\Contracts\IVector;
+use OpenCF\Exceptions\EmptyDatasetException;
+use OpenCF\Exceptions\EmptyModelException;
 use OpenCF\Support\Vector;
 
 abstract class Recommender implements IRecommender
 {
-    /**
-     * training set.
-     *
-     * @var array[][]
-     */
+    /** @var array */
     protected array $dataset;
 
-    /**
-     * model.
-     *
-     * @var array[][]
-     */
+    /** @var array|null */
     protected ?array $model;
 
     /**
-     * a measure function to calculate similarity.
-     *
      * @var ISimilarity
      */
     protected ISimilarity $similarityFunction;
 
     /**
-     * Predictor.
-     *
      * @var IPredictor
      */
     protected IPredictor $predictor;
 
     /**
-     * vector calculations provider.
-     *
      * @var IVector
      */
     protected IVector $vector;
@@ -63,6 +51,10 @@ abstract class Recommender implements IRecommender
     /** @inheritdoc */
     public function buildModel(): self
     {
+        if (empty($this->dataset)) {
+            throw new EmptyDatasetException();
+        }
+
         foreach ($this->dataset as $k1 => $r1) {
             foreach ($this->dataset as $k2 => $r2) {
                 // if we are comparing the item
@@ -92,8 +84,12 @@ abstract class Recommender implements IRecommender
     /** @inheritdoc */
     public function predict(array $userRatings): array
     {
+        if (empty($this->model)) {
+            throw new EmptyModelException();
+        }
+
         $predictions = [];
-        foreach ($this->model ?? [] as $key => $items) {
+        foreach ($this->model as $key => $items) {
             // if the rating is present in the
             // evaluation given by the user we skip
             if (isset($userRatings[$key])) {
