@@ -79,9 +79,9 @@ it('returns correct predictions', function () {
         'Hulk' => 2,
     ];
     $expected = [
-        'Batman V Superman' => 2,
+        'Batman V Superman' => 2.0,
     ];
-    expect($scheme->predict($user1))->toEqual($expected);
+    expect($scheme->predict($user1))->toBe($expected);
 
     $user2 = [
         'Batman V Superman' => 2,
@@ -92,7 +92,7 @@ it('returns correct predictions', function () {
     $expected = [
         'Avatar' => 2.13,
     ];
-    expect($scheme->predict($user2))->toEqual($expected);
+    expect($scheme->predict($user2))->toBe($expected);
 
     $user3 = [
         'Batman V Superman' => 5,
@@ -103,7 +103,7 @@ it('returns correct predictions', function () {
     $expected = [
         'Iron Man' => 3.88,
     ];
-    expect($scheme->predict($user3))->toEqual($expected);
+    expect($scheme->predict($user3))->toBe($expected);
 
     $user4 = [
         'Batman V Superman' => 5,
@@ -112,9 +112,9 @@ it('returns correct predictions', function () {
         'Hulk' => 4,
     ];
     $expected = [
-        'Spider man' => 4,
+        'Spider man' => 4.0,
     ];
-    expect($scheme->predict($user4))->toEqual($expected);
+    expect($scheme->predict($user4))->toBe($expected);
 
     $user5 = [
         'Batman V Superman' => 5,
@@ -125,7 +125,7 @@ it('returns correct predictions', function () {
     $expected = [
         'Hulk' => 3.75,
     ];
-    expect($scheme->predict($user5))->toEqual($expected);
+    expect($scheme->predict($user5))->toBe($expected);
 
     $user6 = [
         'Avatar' => 4,
@@ -136,7 +136,7 @@ it('returns correct predictions', function () {
     $expected = [
         'Batman V Superman' => 4.25,
     ];
-    expect($scheme->predict($user6))->toEqual($expected);
+    expect($scheme->predict($user6))->toBe($expected);
 
     $user7 = [
         'Batman V Superman' => 1,
@@ -147,7 +147,7 @@ it('returns correct predictions', function () {
     $expected = [
         'Avatar' => 2.88,
     ];
-    expect($scheme->predict($user7))->toEqual($expected);
+    expect($scheme->predict($user7))->toBe($expected);
 
     $user8 = [
         'Batman V Superman' => 3,
@@ -158,7 +158,7 @@ it('returns correct predictions', function () {
     $expected = [
         'Iron Man' => 2.13,
     ];
-    expect($scheme->predict($user8))->toEqual($expected);
+    expect($scheme->predict($user8))->toBe($expected);
 
     $user8 = [
         'Batman V Superman' => 2,
@@ -169,7 +169,7 @@ it('returns correct predictions', function () {
     $expected = [
         'Spider man' => 2.75,
     ];
-    expect($scheme->predict($user8))->toEqual($expected);
+    expect($scheme->predict($user8))->toBe($expected);
 
     $user10 = [
         'Batman V Superman' => 4,
@@ -180,5 +180,5 @@ it('returns correct predictions', function () {
     $expected = [
         'Hulk' => 3.25,
     ];
-    expect($scheme->predict($user10))->toEqual($expected);
+    expect($scheme->predict($user10))->toBe($expected);
 });

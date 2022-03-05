@@ -4,13 +4,13 @@ use OpenCF\Algorithms\Similarity\Cosine;
 use OpenCF\Algorithms\Similarity\WeightedCosine;
 use OpenCF\Algorithms\Slopeone\WeightedSlopeone;
 use OpenCF\Contracts\IRecommender;
-use OpenCF\Exceptions\EmptyDatasetException;
+use OpenCF\Exceptions\EmptyModelException;
 use OpenCF\Exceptions\NotRegisteredRecommenderException;
 use OpenCF\RecommenderService;
 
 it('does not initialize with an empty dataset', function () {
     new RecommenderService([]);
-})->throws(EmptyDatasetException::class);
+})->throws(EmptyModelException::class);
 
 it('does not register an unsupported recommender', function () {
     $dataset = [

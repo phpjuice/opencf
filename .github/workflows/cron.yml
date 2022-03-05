@@ -1,7 +1,6 @@
 name: Check Package
 
 on:
-  pull_request:
   schedule:
     - cron: '0 0 * * *'  # every day at midnight
 

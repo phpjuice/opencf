@@ -7,7 +7,7 @@ use OpenCF\Algorithms\Similarity\WeightedCosine;
 use OpenCF\Algorithms\Slopeone\WeightedSlopeone;
 use OpenCF\Contracts\IRecommender;
 use OpenCF\Contracts\IRecommenderService;
-use OpenCF\Exceptions\EmptyDatasetException;
+use OpenCF\Exceptions\EmptyModelException;
 use OpenCF\Exceptions\NotRegisteredRecommenderException;
 use OpenCF\Exceptions\NotSupportedSchemeException;
 use ReflectionClass;
@@ -59,12 +59,12 @@ class RecommenderService implements IRecommenderService
      * @param  array  $dataset  training set
      *
      * @return $this
-     * @throws EmptyDatasetException
+     * @throws EmptyModelException
      */
     public function setDataset(array $dataset = []): self
     {
         if (empty($dataset)) {
-            throw new EmptyDatasetException();
+            throw new EmptyModelException();
         }
         $this->dataset = $dataset;
 
