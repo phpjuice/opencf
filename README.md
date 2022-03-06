@@ -8,6 +8,8 @@
 
 PHP implementation of the (Weighted Slopeone,Cosine, Weighted Cosine) rating-based collaborative filtering schemes.
 
+To learn all about it, head over to the extensive [documentation](https://phpjuice.gitbook.io/opencf).
+
 ## Installation
 
 OpenCF Package requires `PHP 7.4` or higher.
