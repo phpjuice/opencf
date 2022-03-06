@@ -1,6 +1,7 @@
 # OpenCF
 
 ![Tests](https://github.com/phpjuice/opencf/workflows/Tests/badge.svg?branch=main)
+[![Check Package](https://github.com/phpjuice/opencf/actions/workflows/cron.yml/badge.svg)](https://github.com/phpjuice/opencf/actions/workflows/cron.yml)
 [![Latest Stable Version](http://poser.pugx.org/phpjuice/opencf/v)](https://packagist.org/packages/phpjuice/opencf)
 [![Total Downloads](http://poser.pugx.org/phpjuice/opencf/downloads)](https://packagist.org/packages/phpjuice/opencf)
 [![License](http://poser.pugx.org/phpjuice/opencf/license)](https://packagist.org/packages/phpjuice/opencf)
@@ -141,6 +142,7 @@ the [tags on this repository](https://github.com/PHPJuice/opencf/tags).
 license. Please see the [Licence](https://github.com/phpjuice/opencf/blob/main/LICENSE) for more information.
 
 ![Tests](https://github.com/phpjuice/opencf/workflows/Tests/badge.svg?branch=main)
+[![Check Package](https://github.com/phpjuice/opencf/actions/workflows/cron.yml/badge.svg)](https://github.com/phpjuice/opencf/actions/workflows/cron.yml)
 [![Latest Stable Version](http://poser.pugx.org/phpjuice/opencf/v)](https://packagist.org/packages/phpjuice/opencf)
 [![Total Downloads](http://poser.pugx.org/phpjuice/opencf/downloads)](https://packagist.org/packages/phpjuice/opencf)
 [![License](http://poser.pugx.org/phpjuice/opencf/license)](https://packagist.org/packages/phpjuice/opencf)
