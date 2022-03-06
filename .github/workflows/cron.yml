@@ -2,7 +2,7 @@ name: Check Package
 
 on:
   schedule:
-    - cron: '0 0 * * *'  # every day at midnight
+    - cron: '0 */6 * * *'  # Every 6 Hours
 
 jobs:
   install:

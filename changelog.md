@@ -2,6 +2,18 @@
 
 All notable changes to `phpjuice/opencf` will be documented in this file.
 
+## Version 2.2.0
+
+### Changed
+
+- Add integration tests in #5
+
+## Version 2.1.0
+
+### Changed
+
+- Refactor recommender service in #4
+
 ## Version 2.0.0
 
 ### Added
