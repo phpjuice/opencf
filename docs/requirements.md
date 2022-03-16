@@ -1,6 +1,6 @@
 # Requirements
 
-## Requirements
+## PHP Requirements
 
 `phpjuice/opencf` Package requires PHP 7.4 or higher. If you are using an older version of php this package will not function correctly.
 
