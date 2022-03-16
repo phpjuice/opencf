@@ -2,6 +2,7 @@
 
 ![Tests](https://github.com/phpjuice/opencf/workflows/Tests/badge.svg?branch=main)
 [![Check Package](https://github.com/phpjuice/opencf/actions/workflows/cron.yml/badge.svg)](https://github.com/phpjuice/opencf/actions/workflows/cron.yml)
+[![Maintainability](https://api.codeclimate.com/v1/badges/60b1fac54adddd5a4e12/maintainability)](https://codeclimate.com/github/phpjuice/opencf/maintainability)
 [![Latest Stable Version](http://poser.pugx.org/phpjuice/opencf/v)](https://packagist.org/packages/phpjuice/opencf)
 [![Total Downloads](http://poser.pugx.org/phpjuice/opencf/downloads)](https://packagist.org/packages/phpjuice/opencf)
 [![License](http://poser.pugx.org/phpjuice/opencf/license)](https://packagist.org/packages/phpjuice/opencf)
@@ -13,7 +14,7 @@ PHP implementation of the (Weighted Slopeone,Cosine, Weighted Cosine) rating-bas
 OpenCF Package is designed to be very simple and straightforward to use. All you have to do is:
 
 1. Load a training set (dataset)
-3. Predict future ratings using a recommender. (Weighted Slopeone,Cosine, Weighted Cosine)
+2. Predict future ratings using a recommender. (Weighted Slopeone,Cosine, Weighted Cosine)
 
 ### Create Recommender Service
 
@@ -71,6 +72,7 @@ This should produce the following results:
 
 ![Tests](https://github.com/phpjuice/opencf/workflows/Tests/badge.svg?branch=main)
 [![Check Package](https://github.com/phpjuice/opencf/actions/workflows/cron.yml/badge.svg)](https://github.com/phpjuice/opencf/actions/workflows/cron.yml)
+[![Maintainability](https://api.codeclimate.com/v1/badges/60b1fac54adddd5a4e12/maintainability)](https://codeclimate.com/github/phpjuice/opencf/maintainability)
 [![Latest Stable Version](http://poser.pugx.org/phpjuice/opencf/v)](https://packagist.org/packages/phpjuice/opencf)
 [![Total Downloads](http://poser.pugx.org/phpjuice/opencf/downloads)](https://packagist.org/packages/phpjuice/opencf)
 [![License](http://poser.pugx.org/phpjuice/opencf/license)](https://packagist.org/packages/phpjuice/opencf)
