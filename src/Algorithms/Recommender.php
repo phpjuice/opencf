@@ -67,6 +67,7 @@ abstract class Recommender implements IRecommender
                     $this->dataset[$k1],
                     $this->dataset[$k2]
                 );
+
                 try {
                     // save the measure to the model
                     $this->model[$k1][$k2] =
@@ -95,6 +96,7 @@ abstract class Recommender implements IRecommender
             if (isset($userRatings[$key])) {
                 continue;
             }
+
             try {
                 $predictions[$key] = $this->predictor
                     ->getPrediction($userRatings, $key);

@@ -73,7 +73,7 @@ class RecommenderService implements IRecommenderService
 
     public function weightedSlopeone(): IRecommender
     {
-        if (!in_array(WeightedSlopeone::class, $this->recommenders)) {
+        if (! in_array(WeightedSlopeone::class, $this->recommenders)) {
             $this->registerRecommender(WeightedSlopeone::class);
         }
 
@@ -85,16 +85,22 @@ class RecommenderService implements IRecommenderService
         try {
             $rf = new ReflectionClass($recommender);
         } catch (ReflectionException $e) {
-            throw new NotSupportedSchemeException(sprintf('Recommendation engine "%s" must implement "%s" interface',
-                $recommender, IRecommender::class));
+            throw new NotSupportedSchemeException(sprintf(
+                'Recommendation engine "%s" must implement "%s" interface',
+                $recommender,
+                IRecommender::class
+            ));
         }
 
-        if (!$rf->implementsInterface(IRecommender::class)) {
-            throw new NotSupportedSchemeException(sprintf('Recommendation engine "%s" must implement "%s" interface',
-                $recommender, IRecommender::class));
+        if (! $rf->implementsInterface(IRecommender::class)) {
+            throw new NotSupportedSchemeException(sprintf(
+                'Recommendation engine "%s" must implement "%s" interface',
+                $recommender,
+                IRecommender::class
+            ));
         }
 
-        if (!in_array($recommender, $this->recommenders)) {
+        if (! in_array($recommender, $this->recommenders)) {
             $this->recommenders[$recommender] = new $recommender($this->dataset);
         }
 
@@ -103,9 +109,11 @@ class RecommenderService implements IRecommenderService
 
     public function getRecommender(string $recommender): IRecommender
     {
-        if (!array_key_exists($recommender, $this->recommenders)) {
-            throw new NotRegisteredRecommenderException(sprintf('The Recommendation engine "%s" is not registered in the Recommender Service',
-                $recommender));
+        if (! array_key_exists($recommender, $this->recommenders)) {
+            throw new NotRegisteredRecommenderException(sprintf(
+                'The Recommendation engine "%s" is not registered in the Recommender Service',
+                $recommender
+            ));
         }
 
         return $this->recommenders[$recommender]->buildModel();
@@ -113,7 +121,7 @@ class RecommenderService implements IRecommenderService
 
     public function weightedCosine(): IRecommender
     {
-        if (!in_array(WeightedCosine::class, $this->recommenders)) {
+        if (! in_array(WeightedCosine::class, $this->recommenders)) {
             $this->registerRecommender(WeightedCosine::class);
         }
 
@@ -122,7 +130,7 @@ class RecommenderService implements IRecommenderService
 
     public function cosine(): IRecommender
     {
-        if (!in_array(Cosine::class, $this->recommenders)) {
+        if (! in_array(Cosine::class, $this->recommenders)) {
             $this->registerRecommender(Cosine::class);
         }
 
