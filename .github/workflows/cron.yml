@@ -1,4 +1,4 @@
-name: Check Package
+name: packagist
 
 on:
   schedule:
