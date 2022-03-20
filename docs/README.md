@@ -1,7 +1,7 @@
 # OpenCF
 
-![tests](https://github.com/phpjuice/opencf/workflows/tests/badge.svg?branch=main)
-[![Check Package](https://github.com/phpjuice/opencf/actions/workflows/cron.yml/badge.svg)](https://github.com/phpjuice/opencf/actions/workflows/cron.yml)
+[![tests](https://github.com/phpjuice/opencf/actions/workflows/php.yml/badge.svg?branch=main)](https://github.com/phpjuice/opencf/actions/workflows/php.yml)
+[![packagist](https://github.com/phpjuice/opencf/actions/workflows/cron.yml/badge.svg?branch=main)](https://github.com/phpjuice/opencf/actions/workflows/cron.yml)
 [![Maintainability](https://api.codeclimate.com/v1/badges/60b1fac54adddd5a4e12/maintainability)](https://codeclimate.com/github/phpjuice/opencf/maintainability)
 [![Latest Stable Version](http://poser.pugx.org/phpjuice/opencf/v)](https://packagist.org/packages/phpjuice/opencf)
 [![Total Downloads](http://poser.pugx.org/phpjuice/opencf/downloads)](https://packagist.org/packages/phpjuice/opencf)
