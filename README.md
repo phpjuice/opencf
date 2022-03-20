@@ -1,6 +1,6 @@
 # OpenCF
 
-![Tests](https://github.com/phpjuice/opencf/workflows/Tests/badge.svg?branch=main)
+![tests](https://github.com/phpjuice/opencf/workflows/tests/badge.svg?branch=main)
 [![Check Package](https://github.com/phpjuice/opencf/actions/workflows/cron.yml/badge.svg)](https://github.com/phpjuice/opencf/actions/workflows/cron.yml)
 [![Maintainability](https://api.codeclimate.com/v1/badges/60b1fac54adddd5a4e12/maintainability)](https://codeclimate.com/github/phpjuice/opencf/maintainability)
 [![Latest Stable Version](http://poser.pugx.org/phpjuice/opencf/v)](https://packagist.org/packages/phpjuice/opencf)
@@ -144,7 +144,7 @@ the [tags on this repository](https://github.com/PHPJuice/opencf/tags).
 
 license. Please see the [Licence](https://github.com/phpjuice/opencf/blob/main/LICENSE) for more information.
 
-![Tests](https://github.com/phpjuice/opencf/workflows/Tests/badge.svg?branch=main)
+![tests](https://github.com/phpjuice/opencf/workflows/tests/badge.svg?branch=main)
 [![Check Package](https://github.com/phpjuice/opencf/actions/workflows/cron.yml/badge.svg)](https://github.com/phpjuice/opencf/actions/workflows/cron.yml)
 [![Maintainability](https://api.codeclimate.com/v1/badges/60b1fac54adddd5a4e12/maintainability)](https://codeclimate.com/github/phpjuice/opencf/maintainability)
 [![Latest Stable Version](http://poser.pugx.org/phpjuice/opencf/v)](https://packagist.org/packages/phpjuice/opencf)
