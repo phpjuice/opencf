@@ -46,5 +46,10 @@
             "php-cs-fixer fix tests --rules=@PSR2"
         ]
     },
-    "minimum-stability": "stable"
+    "minimum-stability": "stable",
+    "config": {
+        "allow-plugins": {
+            "pestphp/pest-plugin": true
+        }
+    }
 }
