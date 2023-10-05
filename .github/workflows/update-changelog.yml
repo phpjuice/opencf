@@ -25,4 +25,4 @@ jobs:
         with:
           branch: main
           commit_message: Update CHANGELOG
-          file_pattern: CHANGELOG.md
+          file_pattern: changelog.md
