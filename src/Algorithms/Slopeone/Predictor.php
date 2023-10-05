@@ -35,7 +35,8 @@ class Predictor extends AbstractPredictor
             $sum += ($value + $vectors[1][$key]) * $card;
             $freq += $card;
         }
-        $predValue = $sum / $freq;
+
+        $predValue = $sum / ($freq !== 0 ? $freq : 1);
 
         return round($predValue, $this->vector->getScale());
     }

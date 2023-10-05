@@ -24,9 +24,9 @@
         "php": "^7.4|^8.0|^8.1"
     },
     "require-dev": {
-        "squizlabs/php_codesniffer": "^3.4",
-        "phpstan/phpstan": "^0.12",
-        "pestphp/pest": "^1.18"
+        "phpstan/phpstan": "^1.10",
+        "pestphp/pest": "^1.23",
+        "friendsofphp/php-cs-fixer": "^3.34"
     },
     "autoload": {
         "psr-4": {

@@ -27,7 +27,7 @@ it('registers a supported recommender', function () {
     $recommenderService = new RecommenderService($dataset);
 
     // instance of cosine
-    $class = new class () implements IRecommender {
+    $class = new class() implements IRecommender {
         public function name(): string
         {
             return 'Test Recommender';
